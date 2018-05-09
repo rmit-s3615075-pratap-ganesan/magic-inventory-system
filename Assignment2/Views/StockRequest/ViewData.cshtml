@@ -1,0 +1,62 @@
+﻿@model IEnumerable<StockRequest>
+@{
+	ViewBag.Title = "Stock Request";
+}
+<h2>Stock Request</h2>
+<form method="get">
+	<p>
+		Product Name: <input name="productID" value="@ViewBag.ProductID" />
+		<input type="submit" value="Filter" />
+	</p>
+</form>
+<table class="table">
+	<thead>
+		<tr>
+			<th>
+				@Html.DisplayNameFor(model => model.StockRequestID)
+			</th>
+			
+			
+			<th>
+				@Html.DisplayNameFor(model => model.Product.Name)
+			</th>
+			
+
+			<th>
+				@Html.DisplayNameFor(model => model.Store.Name)
+			</th>
+
+			<th>
+				@Html.DisplayNameFor(model => model.Quantity)
+			</th>
+			
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+		<tr>
+			<td>
+				@Html.DisplayNameFor(modelItem => item.StockRequestID)
+			</td>
+			<td>
+				@Html.DisplayNameFor(modelItem => item.Product.Name)
+			</td>
+			<td>
+				@Html.DisplayNameFor(modelItem => item.Store.Name)
+			</td>
+
+			<td>
+				@Html.DisplayNameFor(modelItem => item.Quantity)
+			</td>
+			
+		</tr>
+		}
+	</tbody>
+</table>
+@{
+	ViewData["Title"] = "View";
+}
+
+<h2>View</h2>
+
