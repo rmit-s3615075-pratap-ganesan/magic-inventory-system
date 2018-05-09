@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Assignment2.Data;
 using Microsoft.AspNetCore.Mvc;
 
-namespace WebApplication1.Controllers
+namespace Assignment2.Controllers
 {
     public class StockRequestController : Controller
     {
@@ -17,13 +17,13 @@ namespace WebApplication1.Controllers
             _context = context;
         }
 
-       
-        public async Task<IActionResult> ViewData(string productName)
+
+        public async Task<IActionResult> Index(string productName)
         {
 
             // Eager loading the Product table - join between OwnerInventory and the Product table.
-            var query = _context.StockRequest.Include(x => x.Product).Include(x => x.Store).Select(x => x);
-            
+            var query = _context.StockRequest.Include(x => x.Product).Select(x => x);
+
 
             if (!string.IsNullOrWhiteSpace(productName))
             {
@@ -42,11 +42,6 @@ namespace WebApplication1.Controllers
             return View(await query.ToListAsync());
         }
 
-
-        public String Welcome()
-        {
-            return "this is a owner page";
-        }
     }
 
 

@@ -1,26 +1,27 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
-using Assignment2.Data;
-using Assignment2.Models;
-using Assignment2.Utility;
 using Microsoft.AspNetCore.Mvc;
+using Assignment2.Models;
+using Assignment2.Models.CartViewModels;
+using Assignment2.Utility;
+using Assignment2.Data;
 
 namespace Assignment2.Controllers
 {
-    public class OwnerController : Controller
+    public class CustomerController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public OwnerController(ApplicationDbContext context)
+        public CustomerController(ApplicationDbContext context)
         {
             _context = context;
         }
 
 
-        // Auto-parsed variables coming in from the request - there is a form on the page to send this data.
+
         public async Task<IActionResult> Index(
             string sortOrder, string currentFilter,
             string searchString, int? page)
@@ -43,6 +44,8 @@ namespace Assignment2.Controllers
 
             // Eager loading the Product table - join between OwnerInventory and the Product table.
             var query = _context.OwnerInventory.Include(x => x.Product).Select(x => x);
+            //var storeID = _context.Store.Where(x=>x.Name.Contains("bourne")).Select(x=>x.StoreID);
+                                
 
             if (!string.IsNullOrWhiteSpace(searchString))
             {
@@ -67,18 +70,34 @@ namespace Assignment2.Controllers
             }
 
             int pageSize = 3;
-            //var viewModel = new OwnerInventoryViewModel
-            //{
-            //    Inventory = await PaginatedList<OwnerInventory>
-            //       .CreateAsync(query.AsNoTracking(), page ?? 1, pageSize)
-            //};
-
-            //// Passing a List<OwnerInventory> model object to the View.
-            //return View(viewModel);
 
             return View(await PaginatedList<OwnerInventory>
                         .CreateAsync(query.AsNoTracking(), page ?? 1, pageSize));
         }
-    }
 
+
+        public async Task<IActionResult> Buy(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var query =  await _context.OwnerInventory.SingleOrDefaultAsync(m => m.ProductID == id);
+                                 
+            if (query == null)
+            {
+                return NotFound();
+            }
+            else{
+                new CartViewModel
+                {
+                    Product = query.Product,
+                    Quantity = query.ProductID
+                        
+                };
+            }   
+            return View(query);
+        }
+    }
 }
