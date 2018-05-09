@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebApplication1.Data;
+using Assignment2.Data;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApplication1.Controllers
