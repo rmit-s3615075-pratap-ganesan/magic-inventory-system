@@ -20,5 +20,14 @@
 
   <ItemGroup>
     <Folder Include="Views\Owner\" />
+    <Folder Include="Views\StockRequest\" />
+    <Folder Include="Views\Customer\" />
+    <Folder Include="Models\CartViewModels\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Controllers\StockRequestController.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Views\StockRequest\ViewData.cshtml" />
   </ItemGroup>
 </Project>
