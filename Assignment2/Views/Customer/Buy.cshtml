@@ -1,20 +1,47 @@
-﻿@model OwnerInventory
+﻿@model StoreInventory
 
 @{
     ViewData["Title"] = "Buy";
 }
 
 <h2>Buy</h2>
+<hr/>
+ <dl class="dl-horizontal">
+      <dt>
+            Product Name
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Product.Name)
+        </dd>
+        <dt>
+            Store Name
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Store.Name)
+        </dd>
+        <dt>
+           Total Availabile
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.StockLevel)
+        </dd>
+         <dt>
+           Price
+        </dt>
+        <dd>
+           $@Html.DisplayFor(model => model.Product.Price)
+        </dd>
+    </dl>
 
-<h4>Product</h4>
-<hr />
+
+
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Buy">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="ProductID" />
             <div class="form-group">
-                <label asp-for="StockLevel" class="control-label"></label>
+                <b>Quantity</b>
                 <input asp-for="StockLevel" class="form-control" />
                 <span asp-validation-for="StockLevel" class="text-danger"></span>
             </div>
