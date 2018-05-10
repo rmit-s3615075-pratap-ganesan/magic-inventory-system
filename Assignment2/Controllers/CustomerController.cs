@@ -78,28 +78,46 @@ namespace Assignment2.Controllers
         }
 
 
-        public async Task<IActionResult> Buy(int? id)
+        public async Task<IActionResult> Buy(int? storeid,int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var query =  await _context.OwnerInventory.SingleOrDefaultAsync(m => m.ProductID == id);
+            var query =  _context.StoreInventory
+                                .Include(x => x.Product)
+                                .Include(x => x.Store)
+                                 .Where(x => x.StoreID == storeid)
+                                .Where(x => x.ProductID == id).First<StoreInventory>();
                                  
             if (query == null)
             {
                 return NotFound();
             }
-            else{
-                new CartViewModel
-                {
-                    Product = query.Product,
-                    Quantity = query.ProductID
+            //else{
+            //    new CartViewModel
+            //    {
+            //        Product = query.Product,
+            //        Quantity = query.ProductID
                         
-                };
-            }   
+            //    };
+            //}   
             return View(query);
+        }
+
+
+        [HttpPost, ActionName("Edit")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditPost(int? stockLevel)
+        {
+            if (stockLevel == null)
+            {
+                return NotFound();
+            }
+
+
+            return RedirectToAction(nameof(Index));
         }
 
 

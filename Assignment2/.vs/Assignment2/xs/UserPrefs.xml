@@ -1,14 +1,17 @@
 ﻿<Properties StartupConfiguration="{35159736-7193-4783-84E0-DEAE6550EE14}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Controllers/CustomerController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Data/ApplicationDbContext.cs">
     <Files>
-      <File FileName="Controllers/CustomerController.cs" Line="76" Column="59" />
-      <File FileName="../../Week 8/WDT-Lecture08-CodeArchive/Example01/cu-final/Controllers/StudentsController.cs" Line="86" Column="38" />
-      <File FileName="../../Week 8/WDT-Lecture08-CodeArchive/Example01/cu-final/Models/Student.cs" Line="13" Column="39" />
+      <File FileName="Controllers/CustomerController.cs" Line="120" Column="8" />
+      <File FileName="../../Week 8/WDT-Lecture08-CodeArchive/Example01/cu-final/Controllers/StudentsController.cs" Line="146" Column="6" />
       <File FileName="../../Week 8/WDT-Lecture08-CodeArchive/Example01/cu-final/Models/Enrollment.cs" Line="1" Column="1" />
-      <File FileName="Models/StoreInventory.cs" Line="9" Column="29" />
-      <File FileName="../../Week 8/WDT-Lecture08-CodeArchive/Example01/cu-final/Data/SchoolContext.cs" Line="29" Column="49" />
-      <File FileName="Data/ApplicationDbContext.cs" Line="18" Column="66" />
-      <File FileName="Views/Customer/Index.cshtml" Line="37" Column="62" />
+      <File FileName="Views/Customer/Index.cshtml" Line="16" Column="8" />
+      <File FileName="Views/Customer/Buy.cshtml" Line="40" Column="32" />
+      <File FileName="../../Week 8/WDT-Lecture08-CodeArchive/Example01/cu-final/Views/Students/Details.cshtml" Line="34" Column="13" />
+      <File FileName="../../Week 8/WDT-Lecture08-CodeArchive/Example01/cu-final/Views/Departments/Details.cshtml" Line="19" Column="13" />
+      <File FileName="Models/CartViewModels/CartViewModel.cs" Line="11" Column="1" />
+      <File FileName="../../Week 8/WDT-Lecture08-CodeArchive/Example01/cu-final/Views/Students/Edit.cshtml" Line="34" Column="16" />
+      <File FileName="Program.cs" Line="16" Column="6" />
+      <File FileName="Data/ApplicationDbContext.cs" Line="33" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
