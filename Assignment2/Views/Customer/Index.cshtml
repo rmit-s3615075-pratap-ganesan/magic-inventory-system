@@ -1,4 +1,4 @@
-﻿@model PaginatedList<OwnerInventory>
+﻿@model PaginatedList<StoreInventory>
 
 @{
     ViewBag.Title = "Magic e-commerce";
@@ -19,16 +19,16 @@
     <thead>
         <tr>
             <th>
-                Product ID
-            </th>        
-            <th>
                 <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Product Name</a>
             </th>
             <th>
-                Price
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["StoreSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Store Name</a>
             </th>
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["QtySortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Stock Level</a>
+                Available
+            </th>
+            <th>
+                Price
             </th>
             <th></th>
         </tr>
@@ -37,17 +37,18 @@
         @foreach(var item in Model) {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ProductID)
-                </td>
-                <td>
                     @Html.DisplayFor(modelItem => item.Product.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Product.Price)
+                    @Html.DisplayFor(modelItem => item.Store.Name)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.StockLevel)
                 </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product.Price)
+                </td>
+            
                 <td>
                     <a asp-action="Buy" asp-route-id="@item.ProductID">Buy</a>
                 </td>

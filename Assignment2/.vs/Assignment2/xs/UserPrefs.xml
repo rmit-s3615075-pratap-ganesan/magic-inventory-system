@@ -1,6 +1,17 @@
 ﻿<Properties StartupConfiguration="{35159736-7193-4783-84E0-DEAE6550EE14}|Default">
-  <MonoDevelop.Ide.Workbench />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Controllers/CustomerController.cs">
+    <Files>
+      <File FileName="Controllers/CustomerController.cs" Line="76" Column="59" />
+      <File FileName="../../Week 8/WDT-Lecture08-CodeArchive/Example01/cu-final/Controllers/StudentsController.cs" Line="86" Column="38" />
+      <File FileName="../../Week 8/WDT-Lecture08-CodeArchive/Example01/cu-final/Models/Student.cs" Line="13" Column="39" />
+      <File FileName="../../Week 8/WDT-Lecture08-CodeArchive/Example01/cu-final/Models/Enrollment.cs" Line="1" Column="1" />
+      <File FileName="Models/StoreInventory.cs" Line="9" Column="29" />
+      <File FileName="../../Week 8/WDT-Lecture08-CodeArchive/Example01/cu-final/Data/SchoolContext.cs" Line="29" Column="49" />
+      <File FileName="Data/ApplicationDbContext.cs" Line="18" Column="66" />
+      <File FileName="Views/Customer/Index.cshtml" Line="37" Column="62" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

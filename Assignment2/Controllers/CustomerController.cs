@@ -28,7 +28,7 @@ namespace Assignment2.Controllers
         {
             ViewData["CurrentSort"] = sortOrder;
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            ViewData["QtySortParm"] = sortOrder == "Qty" ? "qty_desc" : "Qty";
+            ViewData["StoreSortParm"] = sortOrder == "Store" ? "store_desc" : "Store";
 
             if (searchString != null)
             {
@@ -42,8 +42,10 @@ namespace Assignment2.Controllers
 
 
 
-            // Eager loading the Product table - join between OwnerInventory and the Product table.
-            var query = _context.OwnerInventory.Include(x => x.Product).Select(x => x);
+            var query = _context.StoreInventory
+                                .Include(x => x.Product)
+                                .Include(x=>x.Store)
+                                .Select(x => x);
             //var storeID = _context.Store.Where(x=>x.Name.Contains("bourne")).Select(x=>x.StoreID);
                                 
 
@@ -58,11 +60,11 @@ namespace Assignment2.Controllers
                 case "name_desc":
                     query = query.OrderByDescending(s => s.Product.Name);
                     break;
-                case "Qty":
-                    query = query.OrderBy(s => s.StockLevel);
+                case "Store":
+                    query = query.OrderBy(s => s.Store.Name);
                     break;
-                case "date_desc":
-                    query = query.OrderByDescending(s => s.StockLevel);
+                case "store_desc":
+                    query = query.OrderByDescending(s => s.Store.Name);
                     break;
                 default:
                     query = query.OrderBy(s => s.Product.Name);
@@ -71,7 +73,7 @@ namespace Assignment2.Controllers
 
             int pageSize = 3;
 
-            return View(await PaginatedList<OwnerInventory>
+            return View(await PaginatedList<StoreInventory>
                         .CreateAsync(query.AsNoTracking(), page ?? 1, pageSize));
         }
 
@@ -99,5 +101,9 @@ namespace Assignment2.Controllers
             }   
             return View(query);
         }
+
+
+
+
     }
 }
