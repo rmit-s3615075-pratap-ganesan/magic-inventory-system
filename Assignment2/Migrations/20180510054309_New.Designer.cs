@@ -8,16 +8,17 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 
-namespace Assignment2.Data.Migrations
+namespace Assignment2.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180510054309_New")]
+    partial class New
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.0.1-rtm-125")
+                .HasAnnotation("ProductVersion", "2.0.3-rtm-10026")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Assignment2.Models.ApplicationUser", b =>
@@ -69,6 +70,78 @@ namespace Assignment2.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("Assignment2.Models.OwnerInventory", b =>
+                {
+                    b.Property<int>("ProductID");
+
+                    b.Property<int>("StockLevel");
+
+                    b.HasKey("ProductID");
+
+                    b.ToTable("OwnerInventory");
+                });
+
+            modelBuilder.Entity("Assignment2.Models.Product", b =>
+                {
+                    b.Property<int>("ProductID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.Property<decimal>("Price");
+
+                    b.HasKey("ProductID");
+
+                    b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("Assignment2.Models.StockRequest", b =>
+                {
+                    b.Property<int>("StockRequestID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("ProductID");
+
+                    b.Property<int>("Quantity");
+
+                    b.Property<int>("StoreID");
+
+                    b.HasKey("StockRequestID");
+
+                    b.HasIndex("ProductID");
+
+                    b.HasIndex("StoreID");
+
+                    b.ToTable("StockRequest");
+                });
+
+            modelBuilder.Entity("Assignment2.Models.Store", b =>
+                {
+                    b.Property<int>("StoreID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("StoreID");
+
+                    b.ToTable("Stores");
+                });
+
+            modelBuilder.Entity("Assignment2.Models.StoreInventory", b =>
+                {
+                    b.Property<int>("StoreID");
+
+                    b.Property<int>("ProductID");
+
+                    b.Property<int>("StockLevel");
+
+                    b.HasKey("StoreID", "ProductID");
+
+                    b.HasIndex("ProductID");
+
+                    b.ToTable("StoreInventory");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -177,6 +250,40 @@ namespace Assignment2.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("Assignment2.Models.OwnerInventory", b =>
+                {
+                    b.HasOne("Assignment2.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Assignment2.Models.StockRequest", b =>
+                {
+                    b.HasOne("Assignment2.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Assignment2.Models.Store", "Store")
+                        .WithMany()
+                        .HasForeignKey("StoreID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Assignment2.Models.StoreInventory", b =>
+                {
+                    b.HasOne("Assignment2.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Assignment2.Models.Store", "Store")
+                        .WithMany("StoreInventory")
+                        .HasForeignKey("StoreID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
