@@ -8,6 +8,7 @@ using Assignment2.Models;
 using Assignment2.Models.CartViewModels;
 using Assignment2.Utility;
 using Assignment2.Data;
+using Microsoft.AspNetCore.Http;
 
 namespace Assignment2.Controllers
 {
@@ -100,28 +101,45 @@ namespace Assignment2.Controllers
             //    {
             //        Product = query.Product,
             //        Quantity = query.ProductID
-                        
+
             //    };
             //}   
             return View(query);
         }
 
 
-        [HttpPost, ActionName("Edit")]
+        [HttpPost, ActionName("Buy")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditPost(int? stockLevel)
+        public async Task<IActionResult> Buy(int? stockLevel)
         {
             if (stockLevel == null)
             {
                 return NotFound();
             }
 
+            CartViewModel cart = new CartViewModel();
+            cart.ProductID = Convert.ToInt32("" + Request.Form["ProductID"]);
+            cart.ProductName = ""+Request.Form["Product.Name"];
+            cart.StoreID = Convert.ToInt32("" + Request.Form["StoreID"]);
+            cart.StoreName = "" + Request.Form["Store.Name"];
+            cart.Price = Convert.ToDecimal(""+Request.Form["Product.Price"]);
+            cart.Quantity = stockLevel ?? 0;
 
+            ShoppingList.AddToShoppingList(cart);
             return RedirectToAction(nameof(Index));
         }
 
 
+        public async Task<IActionResult> Cart(){
+            
+            CartViewModel cart = new CartViewModel();
+            foreach (var Kart in ShoppingList.GetAllShoppingList().Keys)
+                cart = ShoppingList.GetAllShoppingList()[Kart];
 
+            List<CartViewModel> cartList = ShoppingList.GetAllShoppingList().Values.ToList<CartViewModel>();
 
+            return View(cartList);
+        }
+         
     }
 }
