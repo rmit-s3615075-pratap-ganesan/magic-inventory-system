@@ -10,6 +10,7 @@ using Assignment2.Utility;
 using Assignment2.Data;
 using Microsoft.AspNetCore.Http;
 
+
 namespace Assignment2.Controllers
 {
     public class CustomerController : Controller
@@ -96,21 +97,14 @@ namespace Assignment2.Controllers
             {
                 return NotFound();
             }
-            //else{
-            //    new CartViewModel
-            //    {
-            //        Product = query.Product,
-            //        Quantity = query.ProductID
-
-            //    };
-            //}   
+           
             return View(query);
         }
 
 
         [HttpPost, ActionName("Buy")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Buy(int? stockLevel)
+        public async Task<IActionResult> BuyPost(int? stockLevel)
         {
             if (stockLevel == null)
             {
@@ -124,22 +118,49 @@ namespace Assignment2.Controllers
             cart.StoreName = "" + Request.Form["Store.Name"];
             cart.Price = Convert.ToDecimal(""+Request.Form["Product.Price"]);
             cart.Quantity = stockLevel ?? 0;
+            cart.TotalPrice = cart.Quantity * cart.Price;
 
-            ShoppingList.AddToShoppingList(cart);
+            string cartkey = cart.ProductID + "/" + cart.StoreID;
+            HttpContext.Session.Set<CartViewModel>(cartkey, cart);
+
             return RedirectToAction(nameof(Index));
         }
 
 
         public async Task<IActionResult> Cart(){
-            
-            CartViewModel cart = new CartViewModel();
-            foreach (var Kart in ShoppingList.GetAllShoppingList().Keys)
-                cart = ShoppingList.GetAllShoppingList()[Kart];
-
-            List<CartViewModel> cartList = ShoppingList.GetAllShoppingList().Values.ToList<CartViewModel>();
-
-            return View(cartList);
+            return View(getSessionItems());
         }
+
+
+        public async Task<IActionResult> DeleteCart(int prodID,int storeID)
+        {
+
+            HttpContext.Session.Remove(prodID + "/" + storeID);
+            return RedirectToAction(nameof(Cart));
+        }
+
+        public async Task<IActionResult> EditCart(int prodID, int storeID)
+        {
+            return  RedirectToAction("Action", "controller", new { @storeid = storeID,@id=prodID });
+        }
+
+
+        public List<CartViewModel> getSessionItems(){
+            decimal totalPrice = 0;
+            List<CartViewModel> shoppingList = new List<CartViewModel>();
+
+            foreach (var session in HttpContext.Session.Keys)
+            {
+                CartViewModel cart = HttpContext.Session.Get<CartViewModel>(session);
+                totalPrice += cart.TotalPrice;
+                shoppingList.Add(cart);
+            }
+            ViewData["TotalPrice"] = totalPrice;
+            return shoppingList;
+        }
+
+
+
          
     }
 }

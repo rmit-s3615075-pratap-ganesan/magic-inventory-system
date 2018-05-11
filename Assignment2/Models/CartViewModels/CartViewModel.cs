@@ -11,6 +11,7 @@ namespace Assignment2.Models.CartViewModels
         public string StoreName { get; set; }
         public int Quantity { get; set; }
         public decimal Price { get; set; }
+        public decimal TotalPrice { get; set; }
 
 
 
