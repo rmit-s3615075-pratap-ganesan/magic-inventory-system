@@ -1,12 +1,10 @@
 ﻿<Properties StartupConfiguration="{35159736-7193-4783-84E0-DEAE6550EE14}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Models/CartViewModels/CartViewModel.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Startup.cs">
     <Files>
-      <File FileName="Controllers/CustomerController.cs" Line="136" Column="33" />
-      <File FileName="Utility/SessionExtensions.cs" Line="4" Column="38" />
-      <File FileName="Views/Customer/Cart.cshtml" Line="28" Column="56" />
-      <File FileName="Models/Store.cs" Line="9" Column="11" />
-      <File FileName="Views/Customer/Index.cshtml" Line="79" Column="1" />
-      <File FileName="Models/CartViewModels/CartViewModel.cs" Line="19" Column="1" />
+      <File FileName="Controllers/CustomerController.cs" Line="11" Column="33" />
+      <File FileName="Utility/ShoppingList.cs" Line="24" Column="10" />
+      <File FileName="Utility/SessionExtensions.cs" Line="1" Column="1" />
+      <File FileName="Startup.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />

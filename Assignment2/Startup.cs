@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -46,6 +46,15 @@ namespace Assignment2
             services.AddTransient<IEmailSender, EmailSender>();
 
             services.AddMvc();
+
+            //add for session support
+            services.AddDistributedMemoryCache();
+            //configure session
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(15);
+                options.Cookie.HttpOnly = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -64,6 +73,8 @@ namespace Assignment2
             app.UseStaticFiles();
 
             app.UseAuthentication();
+            //enable session
+            app.UseSession();
 
             app.UseMvc(routes =>
             {

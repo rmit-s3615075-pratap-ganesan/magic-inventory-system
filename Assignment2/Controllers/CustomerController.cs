@@ -10,6 +10,7 @@ using Assignment2.Utility;
 using Assignment2.Data;
 using Microsoft.AspNetCore.Http;
 
+
 namespace Assignment2.Controllers
 {
     public class CustomerController : Controller
@@ -96,14 +97,7 @@ namespace Assignment2.Controllers
             {
                 return NotFound();
             }
-            //else{
-            //    new CartViewModel
-            //    {
-            //        Product = query.Product,
-            //        Quantity = query.ProductID
-
-            //    };
-            //}   
+           
             return View(query);
         }
 
@@ -125,20 +119,21 @@ namespace Assignment2.Controllers
             cart.Price = Convert.ToDecimal(""+Request.Form["Product.Price"]);
             cart.Quantity = stockLevel ?? 0;
 
-            ShoppingList.AddToShoppingList(cart);
+            string cartkey = cart.ProductID + "/" + cart.StoreID;
+            HttpContext.Session.Set<CartViewModel>(cartkey, cart);
+
             return RedirectToAction(nameof(Index));
         }
 
 
         public async Task<IActionResult> Cart(){
-            
-            CartViewModel cart = new CartViewModel();
-            foreach (var Kart in ShoppingList.GetAllShoppingList().Keys)
-                cart = ShoppingList.GetAllShoppingList()[Kart];
 
-            List<CartViewModel> cartList = ShoppingList.GetAllShoppingList().Values.ToList<CartViewModel>();
+            List<CartViewModel> shoppingList = new List<CartViewModel>();
 
-            return View(cartList);
+            foreach (var session in HttpContext.Session.Keys)
+                shoppingList.Add(HttpContext.Session.Get<CartViewModel>(session));
+         
+            return View(shoppingList);
         }
          
     }
