@@ -16,6 +16,8 @@ namespace Assignment2.Data
         public DbSet<OwnerInventory> OwnerInventory { get; set; }
         public DbSet<StockRequest> StockRequest { get; set; }
         public DbSet<StoreInventory> StoreInventory { get; set; }
+        public DbSet<CustomerOrder> CustomerOrder { get; set; }
+        public DbSet<OrderHistory> OrderHistory { get; set; }
 
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
