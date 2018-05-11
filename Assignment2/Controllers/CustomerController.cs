@@ -104,7 +104,7 @@ namespace Assignment2.Controllers
 
         [HttpPost, ActionName("Buy")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Buy(int? stockLevel)
+        public async Task<IActionResult> BuyPost(int? stockLevel)
         {
             if (stockLevel == null)
             {
@@ -118,6 +118,7 @@ namespace Assignment2.Controllers
             cart.StoreName = "" + Request.Form["Store.Name"];
             cart.Price = Convert.ToDecimal(""+Request.Form["Product.Price"]);
             cart.Quantity = stockLevel ?? 0;
+            cart.TotalPrice = cart.Quantity * cart.Price;
 
             string cartkey = cart.ProductID + "/" + cart.StoreID;
             HttpContext.Session.Set<CartViewModel>(cartkey, cart);
@@ -127,14 +128,39 @@ namespace Assignment2.Controllers
 
 
         public async Task<IActionResult> Cart(){
+            return View(getSessionItems());
+        }
 
+
+        public async Task<IActionResult> DeleteCart(int prodID,int storeID)
+        {
+
+            HttpContext.Session.Remove(prodID + "/" + storeID);
+            return RedirectToAction(nameof(Cart));
+        }
+
+        public async Task<IActionResult> EditCart(int prodID, int storeID)
+        {
+            return  RedirectToAction("Action", "controller", new { @storeid = storeID,@id=prodID });
+        }
+
+
+        public List<CartViewModel> getSessionItems(){
+            decimal totalPrice = 0;
             List<CartViewModel> shoppingList = new List<CartViewModel>();
 
             foreach (var session in HttpContext.Session.Keys)
-                shoppingList.Add(HttpContext.Session.Get<CartViewModel>(session));
-         
-            return View(shoppingList);
+            {
+                CartViewModel cart = HttpContext.Session.Get<CartViewModel>(session);
+                totalPrice += cart.TotalPrice;
+                shoppingList.Add(cart);
+            }
+            ViewData["TotalPrice"] = totalPrice;
+            return shoppingList;
         }
+
+
+
          
     }
 }
