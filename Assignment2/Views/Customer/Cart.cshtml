@@ -1,0 +1,62 @@
+﻿@model IEnumerable<CartViewModel>
+
+@{
+    ViewBag.Title = "Magic e-commerce";
+}
+
+<h2>Magic e-cart</h2>  
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Product Name
+            </th>
+            <th>
+                Store Name
+            </th>
+            <th>
+                Total Quantity
+            </th>
+            <th>
+                Price/Item
+            </th>
+            <th>
+                Total Price
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>        
+        @foreach(var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StoreName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    $@Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    $@Html.DisplayFor(modelItem => item.TotalPrice)
+                </td>
+                <td>
+                <a asp-action="Buy" asp-route-storeid="@item.StoreID" asp-route-id="@item.ProductID">Edit</a> |
+                <a asp-action="DeleteCart" asp-route-prodID="@item.ProductID" asp-route-storeID="@item.StoreID">Delete</a> 
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+<div class="form-group">
+    <h1>Total Price $@ViewData["TotalPrice"]</h1>
+    <input type="submit" value="Buy" class="btn btn-default" />
+</div>
+
+

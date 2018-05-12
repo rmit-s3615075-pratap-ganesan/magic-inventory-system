@@ -7,9 +7,13 @@ using Assignment2.Data;
 using Assignment2.Models;
 using Assignment2.Utility;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace Assignment2.Controllers
 {
+    [Authorize(Roles = Constants.WholeSaleRole)] 
     public class OwnerController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -21,6 +25,7 @@ namespace Assignment2.Controllers
 
 
         // Auto-parsed variables coming in from the request - there is a form on the page to send this data.
+    
         public async Task<IActionResult> Index(
             string sortOrder, string currentFilter,
             string searchString, int? page)
@@ -79,6 +84,69 @@ namespace Assignment2.Controllers
             return View(await PaginatedList<OwnerInventory>
                         .CreateAsync(query.AsNoTracking(), page ?? 1, pageSize));
         }
+
+
+        public async Task<IActionResult> Reset(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var query = _context.OwnerInventory
+                                .Include(x => x.Product)
+                                .Where(x => x.ProductID == id).First<OwnerInventory>();
+
+
+            if (query == null)
+            {
+                return NotFound();
+            }
+              
+            return View(query);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Reset(int id, [Bind("ProductID,StockLevel")] OwnerInventory ownerInventory)
+        {
+            if (id != ownerInventory.ProductID)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(ownerInventory);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!OwnerInventoryExists(ownerInventory.ProductID))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+           // ViewData["ProductID"] = new SelectList(_context.Products, "ProductID", "Name", ownerInventory.ProductID);
+            return View(ownerInventory);
+        }
+
+
+        private bool OwnerInventoryExists(int id)
+        {
+            return _context.OwnerInventory.Any(e => e.ProductID == id);
+        }
+
+
     }
 
 }

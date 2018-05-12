@@ -8,6 +8,8 @@ using Assignment2.Models;
 using Assignment2.Models.CartViewModels;
 using Assignment2.Utility;
 using Assignment2.Data;
+using Microsoft.AspNetCore.Http;
+
 
 namespace Assignment2.Controllers
 {
@@ -78,32 +80,87 @@ namespace Assignment2.Controllers
         }
 
 
-        public async Task<IActionResult> Buy(int? id)
+        public async Task<IActionResult> Buy(int? storeid,int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var query =  await _context.OwnerInventory.SingleOrDefaultAsync(m => m.ProductID == id);
+            var query =  _context.StoreInventory
+                                .Include(x => x.Product)
+                                .Include(x => x.Store)
+                                 .Where(x => x.StoreID == storeid)
+                                .Where(x => x.ProductID == id).First<StoreInventory>();
                                  
             if (query == null)
             {
                 return NotFound();
             }
-            else{
-                new CartViewModel
-                {
-                    Product = query.Product,
-                    Quantity = query.ProductID
-                        
-                };
-            }   
+           
             return View(query);
         }
 
 
+        [HttpPost, ActionName("Buy")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> BuyPost(int? stockLevel)
+        {
+            if (stockLevel == null)
+            {
+                return NotFound();
+            }
+
+            CartViewModel cart = new CartViewModel();
+            cart.ProductID = Convert.ToInt32("" + Request.Form["ProductID"]);
+            cart.ProductName = ""+Request.Form["Product.Name"];
+            cart.StoreID = Convert.ToInt32("" + Request.Form["StoreID"]);
+            cart.StoreName = "" + Request.Form["Store.Name"];
+            cart.Price = Convert.ToDecimal(""+Request.Form["Product.Price"]);
+            cart.Quantity = stockLevel ?? 0;
+            cart.TotalPrice = cart.Quantity * cart.Price;
+
+            string cartkey = cart.ProductID + "/" + cart.StoreID;
+            HttpContext.Session.Set<CartViewModel>(cartkey, cart);
+
+            return RedirectToAction(nameof(Index));
+        }
 
 
+        public async Task<IActionResult> Cart(){
+            return View(getSessionItems());
+        }
+
+
+        public async Task<IActionResult> DeleteCart(int prodID,int storeID)
+        {
+
+            HttpContext.Session.Remove(prodID + "/" + storeID);
+            return RedirectToAction(nameof(Cart));
+        }
+
+        public async Task<IActionResult> EditCart(int prodID, int storeID)
+        {
+            return  RedirectToAction("Action", "controller", new { @storeid = storeID,@id=prodID });
+        }
+
+
+        public List<CartViewModel> getSessionItems(){
+            decimal totalPrice = 0;
+            List<CartViewModel> shoppingList = new List<CartViewModel>();
+
+            foreach (var session in HttpContext.Session.Keys)
+            {
+                CartViewModel cart = HttpContext.Session.Get<CartViewModel>(session);
+                totalPrice += cart.TotalPrice;
+                shoppingList.Add(cart);
+            }
+            ViewData["TotalPrice"] = totalPrice;
+            return shoppingList;
+        }
+
+
+
+         
     }
 }
