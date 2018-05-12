@@ -1,4 +1,4 @@
-﻿    using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -70,14 +70,14 @@ namespace Assignment2
                 app.UseExceptionHandler("/Home/Error");
             }
 
+            app.UseStatusCodePages();
             app.UseStaticFiles();
 
             app.UseAuthentication();
-            //enable session
-            app.UseSession();
 
             app.UseMvc(routes =>
             {
+                
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");

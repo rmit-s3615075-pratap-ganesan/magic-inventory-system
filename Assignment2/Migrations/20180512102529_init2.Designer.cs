@@ -11,8 +11,8 @@ using System;
 namespace Assignment2.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180510055057_UserStoreID")]
-    partial class UserStoreID
+    [Migration("20180512102529_init2")]
+    partial class init2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

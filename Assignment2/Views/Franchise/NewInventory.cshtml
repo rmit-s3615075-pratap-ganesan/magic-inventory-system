@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Assignment2.Models.OwnerInventory>
+
+
+@{
+    ViewData["Title"] = "Store Inventory";
+}
+
+<h2>Store Inventory</h2>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.StockLevel)
+                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductID)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.StockLevel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Product.Name)
+            </td>
+                 <td>
+                @Html.DisplayFor(modelItem => item.Product.ProductID)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new {  id=item.ProductID  }) |
+                @Html.ActionLink("Details", "Details", new {  id=item.ProductID  }) |
+                @Html.ActionLink("Delete", "Delete", new {  id=item.ProductID  })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -5,11 +5,10 @@ using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Assignment2.Models;
+using Microsoft.AspNetCore.Http;
+using Assignment2.Data;
 using Assignment2.Models.CartViewModels;
 using Assignment2.Utility;
-using Assignment2.Data;
-using Microsoft.AspNetCore.Http;
-
 
 namespace Assignment2.Controllers
 {

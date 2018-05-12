@@ -11,8 +11,8 @@ using System;
 namespace Assignment2.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180510054309_New")]
-    partial class New
+    [Migration("20180512071207_validMigration5")]
+    partial class validMigration5
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -54,6 +54,8 @@ namespace Assignment2.Migrations
 
                     b.Property<string>("SecurityStamp");
 
+                    b.Property<int?>("StoreID");
+
                     b.Property<bool>("TwoFactorEnabled");
 
                     b.Property<string>("UserName")
@@ -68,6 +70,8 @@ namespace Assignment2.Migrations
                         .IsUnique()
                         .HasName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.HasIndex("StoreID");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -250,6 +254,13 @@ namespace Assignment2.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("Assignment2.Models.ApplicationUser", b =>
+                {
+                    b.HasOne("Assignment2.Models.Store", "Store")
+                        .WithMany()
+                        .HasForeignKey("StoreID");
                 });
 
             modelBuilder.Entity("Assignment2.Models.OwnerInventory", b =>

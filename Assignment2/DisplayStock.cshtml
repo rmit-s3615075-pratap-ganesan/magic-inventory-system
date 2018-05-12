@@ -1,0 +1,42 @@
+﻿@model IEnumerable<Assignment2.Models.StoreInventory>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.StockLevel)
+                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Store)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.StockLevel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Product.ProductID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Store.StoreID)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
