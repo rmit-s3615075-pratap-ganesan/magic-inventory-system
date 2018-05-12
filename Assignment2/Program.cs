@@ -19,20 +19,20 @@ namespace Assignment2
         {
             var host = BuildWebHost(args);
 
-            using (var scope = host.Services.CreateScope())
-            {
-                var services = scope.ServiceProvider;
-                try
-                {
-                    SeedData.Initialize(services).Wait();
-                }
-                catch (Exception ex)
-                {
-                    services.GetRequiredService<ILogger<Program>>().
-                        LogError(ex, "An error occurred while seeding the database.");
-                    throw;
-                }
-            }
+            //using (var scope = host.Services.CreateScope())
+            //{
+            //    var services = scope.ServiceProvider;
+            //    try
+            //    {
+            //        SeedData.Initialize(services).Wait();
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        services.GetRequiredService<ILogger<Program>>().
+            //            LogError(ex, "An error occurred while seeding the database.");
+            //        throw;
+            //    }
+            //}
 
             BuildWebHost(args).Run();
         }

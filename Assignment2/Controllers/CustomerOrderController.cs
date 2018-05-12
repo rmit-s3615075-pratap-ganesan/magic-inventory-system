@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Assignment2.Controllers
 {
-    public class CustomerOrder : Controller
+    public class CustomerOrderController : Controller
     {
         // GET: /<controller>/
         public IActionResult Index()
