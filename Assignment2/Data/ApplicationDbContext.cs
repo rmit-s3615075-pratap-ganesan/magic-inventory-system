@@ -29,6 +29,7 @@ namespace Assignment2.Data
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<StoreInventory>().HasKey(x => new { x.StoreID, x.ProductID });
+            modelBuilder.Entity<OrderHistory>().HasKey(x => new { x.ReceiptID, x.ProductName, x.StoreName });
         }
     }
 }
