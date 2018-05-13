@@ -15,7 +15,7 @@ namespace Assignment2.Controllers
 
         public StockRequestController(ApplicationDbContext context)
         {
-            _context = context;
+            _context = context; 
         }
 
         // Auto-parsed variables coming in from the request - there is a form on the page to send this data.
