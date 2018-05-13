@@ -1,10 +1,11 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Assignment2.Data;
+using Assignment2.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace Assignment2.Controllers
 {
@@ -17,32 +18,80 @@ namespace Assignment2.Controllers
             _context = context;
         }
 
-
-        public async Task<IActionResult> Index(string productName)
+        // Auto-parsed variables coming in from the request - there is a form on the page to send this data.
+        public IActionResult Index(string productName)
         {
-
             // Eager loading the Product table - join between OwnerInventory and the Product table.
-            var query = _context.StockRequest.Include(x => x.Product).Select(x => x);
+            var query = _context.StockRequest.Include(x => x.Product).Include(x => x.Store).Select(x => x).ToList();
 
-
-            if (!string.IsNullOrWhiteSpace(productName))
-            {
-                // Adding a where to the query to filter the data.
-                // Note for the first request productName is null thus the where is not always added.
-                query = query.Where(x => x.Product.Name.Contains(productName));
-
-                // Storing the search into ViewBag to populate the textbox with the same value for convenience.
-                ViewBag.ProductName = productName;
-            }
-
-            // Adding an order by to the query for the Product name.
-            //// query = query.OrderBy(x => x.ProductID);
-
-            // Passing a List<StockInventory> model object to the View.
-            return View(await query.ToListAsync());
+            return View(query);
         }
 
+
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var query = _context.StockRequest
+                                .Include(x => x.Product)
+                                .Include(x => x.Store)
+                                 .Where(x => x.StockRequestID == id)
+                               .First();
+
+             ViewData["stockAvailability"] = _context.OwnerInventory
+                                                    .Where(x => x.ProductID == query.ProductID)
+                                                     .Select(x => x.StockLevel).First();
+
+            if (query == null)
+            {
+                return NotFound();
+            }
+
+            return View(query);
+        }
+
+
+        public async Task<IActionResult> Process()
+        {
+            var stockRequestID = Convert.ToInt32("" + Request.Form["StockrequestID"]);
+            if (stockRequestID == 0)
+            {
+                return NotFound();
+            }
+
+            var stockRequestToUpdate = _context.StockRequest.Where(x => x.StockRequestID == stockRequestID).First();
+            var ownerInventoryToUpdate = _context.OwnerInventory.Select(x=>x).First();
+           
+             ownerInventoryToUpdate.StockLevel -= stockRequestToUpdate.Quantity;
+           
+            
+            if (await TryUpdateModelAsync<OwnerInventory>(
+                ownerInventoryToUpdate,
+                "",
+                s => s.StockLevel))
+            {
+                try
+                {
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (DbUpdateException /* ex */)
+                {
+                    //Log the error (uncomment ex variable name and write a log.)
+                    ModelState.AddModelError("", "Unable to save changes. " +
+                        "Try again, and if the problem persists, " +
+                        "see your system administrator.");
+                }
+            }
+
+            return RedirectToAction(nameof(Index));
+
+        }
+
+
+
     }
-
-
 }

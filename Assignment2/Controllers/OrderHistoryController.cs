@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Assignment2.Models;
+using Assignment2.Models.CartViewModels;
 using Assignment2.Data;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -33,6 +34,29 @@ namespace Assignment2.Controllers
             await _context.SaveChangesAsync();
             _context.Entry(newOrder).GetDatabaseValues();
             var receiptID = newOrder.ReceiptID;
+
+            List<CartViewModel> shoppingList = new List<CartViewModel>();
+
+            foreach (var session in HttpContext.Session.Keys)
+            {
+                CartViewModel cart = HttpContext.Session.Get<CartViewModel>(session);
+
+                shoppingList.Add(cart);
+            }
+
+            OrderHistory newOrderHistory = new OrderHistory();
+            foreach(CartViewModel cart in shoppingList){
+                newOrderHistory = new OrderHistory();
+                newOrderHistory.ReceiptID = receiptID;
+                newOrderHistory.ProductName = cart.ProductName;
+                newOrderHistory.StoreName = cart.StoreName;
+                newOrderHistory.Quantity = cart.Quantity;
+                newOrderHistory.TotalPrice = cart.TotalPrice;
+                _context.Add(newOrderHistory);
+                await _context.SaveChangesAsync();
+            }
+
+           
                     
             return RedirectToAction(nameof(Index));
 

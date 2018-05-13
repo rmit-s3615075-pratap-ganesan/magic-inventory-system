@@ -15,8 +15,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.StockRequestID)
             </th>
-            
-            
             <th>
                 @Html.DisplayNameFor(model => model.Product.Name)
             </th>
@@ -37,10 +35,10 @@
         {
         <tr>
             <td>
-                @Html.DisplayNameFor(modelItem => item.StockRequestID)
+                @Html.DisplayFor(modelItem => item.StockRequestID)
             </td>
             <td>
-                @Html.DisplayNameFor(modelItem => item.Product.Name)
+                @Html.DisplayFor(modelItem => item.Product.Name)
             </td>
            <!-- <td>
                 @Html.DisplayNameFor(modelItem => item.Store.Name)
@@ -49,6 +47,9 @@
             <td>
                 @Html.DisplayNameFor(modelItem => item.Quantity)
             </td>-->
+            <td>
+                <a asp-action="Details" asp-route-id="@item.StockRequestID">Details</a>
+            </td>
             
         </tr>
         }
