@@ -48,6 +48,7 @@ namespace Assignment2.Controllers
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
             ViewData["ReturnUrl"] = returnUrl;
+           
             return View();
         }
 
