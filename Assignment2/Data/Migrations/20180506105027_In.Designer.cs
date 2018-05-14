@@ -8,12 +8,13 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 
-namespace Assignment2.Migrations
+namespace Assignment2.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180506105027_In")]
+    partial class In
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,8 +54,6 @@ namespace Assignment2.Migrations
 
                     b.Property<string>("SecurityStamp");
 
-                    b.Property<int?>("StoreID");
-
                     b.Property<bool>("TwoFactorEnabled");
 
                     b.Property<string>("UserName")
@@ -70,116 +69,7 @@ namespace Assignment2.Migrations
                         .HasName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.HasIndex("StoreID");
-
                     b.ToTable("AspNetUsers");
-                });
-
-            modelBuilder.Entity("Assignment2.Models.CustomerOrder", b =>
-                {
-                    b.Property<int>("ReceiptID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("TransactionDate");
-
-                    b.Property<string>("UserEmail");
-
-                    b.HasKey("ReceiptID");
-
-                    b.ToTable("CustomerOrder");
-                });
-
-            modelBuilder.Entity("Assignment2.Models.OrderHistory", b =>
-                {
-                    b.Property<int>("ReceiptID");
-
-                    b.Property<string>("ProductName");
-
-                    b.Property<string>("StoreName");
-
-                    b.Property<int>("Quantity");
-
-                    b.Property<decimal>("TotalPrice");
-
-                    b.HasKey("ReceiptID", "ProductName", "StoreName");
-
-                    b.ToTable("OrderHistory");
-                });
-
-            modelBuilder.Entity("Assignment2.Models.OwnerInventory", b =>
-                {
-                    b.Property<int>("ProductID");
-
-                    b.Property<int>("StockLevel");
-
-                    b.Property<int?>("StoreID");
-
-                    b.HasKey("ProductID");
-
-                    b.HasIndex("StoreID");
-
-                    b.ToTable("OwnerInventory");
-                });
-
-            modelBuilder.Entity("Assignment2.Models.Product", b =>
-                {
-                    b.Property<int>("ProductID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Name");
-
-                    b.Property<decimal>("Price");
-
-                    b.HasKey("ProductID");
-
-                    b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("Assignment2.Models.StockRequest", b =>
-                {
-                    b.Property<int>("StockRequestID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("ProductID");
-
-                    b.Property<int>("Quantity");
-
-                    b.Property<int>("StoreID");
-
-                    b.HasKey("StockRequestID");
-
-                    b.HasIndex("ProductID");
-
-                    b.HasIndex("StoreID");
-
-                    b.ToTable("StockRequest");
-                });
-
-            modelBuilder.Entity("Assignment2.Models.Store", b =>
-                {
-                    b.Property<int>("StoreID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Name");
-
-                    b.HasKey("StoreID");
-
-                    b.ToTable("Stores");
-                });
-
-            modelBuilder.Entity("Assignment2.Models.StoreInventory", b =>
-                {
-                    b.Property<int>("StoreID");
-
-                    b.Property<int>("ProductID");
-
-                    b.Property<int>("StockLevel");
-
-                    b.HasKey("StoreID", "ProductID");
-
-                    b.HasIndex("ProductID");
-
-                    b.ToTable("StoreInventory");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -288,59 +178,6 @@ namespace Assignment2.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("Assignment2.Models.ApplicationUser", b =>
-                {
-                    b.HasOne("Assignment2.Models.Store", "Store")
-                        .WithMany()
-                        .HasForeignKey("StoreID");
-                });
-
-            modelBuilder.Entity("Assignment2.Models.OrderHistory", b =>
-                {
-                    b.HasOne("Assignment2.Models.CustomerOrder", "CustomerOrder")
-                        .WithMany("OrderHistory")
-                        .HasForeignKey("ReceiptID")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Assignment2.Models.OwnerInventory", b =>
-                {
-                    b.HasOne("Assignment2.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductID")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Assignment2.Models.Store")
-                        .WithMany("OwnerInventory")
-                        .HasForeignKey("StoreID");
-                });
-
-            modelBuilder.Entity("Assignment2.Models.StockRequest", b =>
-                {
-                    b.HasOne("Assignment2.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductID")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Assignment2.Models.Store", "Store")
-                        .WithMany()
-                        .HasForeignKey("StoreID")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Assignment2.Models.StoreInventory", b =>
-                {
-                    b.HasOne("Assignment2.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductID")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Assignment2.Models.Store", "Store")
-                        .WithMany("StoreInventory")
-                        .HasForeignKey("StoreID")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

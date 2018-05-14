@@ -1,0 +1,54 @@
+﻿@model StockRequest
+
+@{
+    ViewData["Title"] = "Stock Request";
+}
+<h3> Process Stock Request </h3>
+<hr/>
+ <dl class="dl-horizontal">
+      <dt>
+            Product Name
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Product.Name)
+        </dd>
+        <dt>
+            Store Name
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Store.Name)
+        </dd>
+        <dt>
+           Requested Quantity
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Quantity)
+        </dd>
+         <dt>
+         Total Availability
+        </dt>
+         <dd>
+            @ViewData["stockAvailability"] 
+        </dd>    
+      </dl>
+
+
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Process">
+            <div class="form-group">
+                <input type="hidden" asp-for="StockRequestID"/>
+                <input type="submit" value="Process" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
