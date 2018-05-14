@@ -13,6 +13,7 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.2" PrivateAssets="All" />
     <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.0.3" />
     <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="2.0.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,6 +29,7 @@
     <Folder Include="Migrations\" />
     <Folder Include="Views\StockRequest\" />
     <Folder Include="Views\OrderHistory\" />
+    <Folder Include="Views\CustomerOrder\" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Views\StockRequest\ViewData.cshtml" />

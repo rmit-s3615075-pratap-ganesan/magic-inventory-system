@@ -1,0 +1,46 @@
+﻿@model IEnumerable<CustomerOrder>
+
+@{
+    ViewBag.Title = "Magic e-commerce";
+}
+
+<h2>Magic Orders</h2>  
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Receipt ID
+            </th>
+            <th>
+                Email address
+            </th>
+            <th>
+                Transaction time
+            </th>
+        </tr>
+    </thead>
+    <tbody>        
+        @foreach(var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReceiptID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserEmail)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TransactionDate)
+                </td>
+                <td>
+                <a asp-action="Detail" asp-route-id="@item.ReceiptID">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+
+
