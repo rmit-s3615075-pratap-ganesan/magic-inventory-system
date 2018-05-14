@@ -73,6 +73,8 @@ namespace Assignment2
             app.UseStatusCodePages();
             app.UseStaticFiles();
 
+            //enable session
+            app.UseSession();
             app.UseAuthentication();
 
             app.UseMvc(routes =>
