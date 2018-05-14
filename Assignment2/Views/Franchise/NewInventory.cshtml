@@ -1,0 +1,41 @@
+﻿@model IEnumerable<Assignment2.Models.Product>
+
+@{
+    ViewData["Title"] = "Store Inventory";
+}
+
+<h2>Store Inventory</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductID)
+            </th>   
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+                <td>
+     
+            </td>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+       
+            <td>
+     
+                <a asp-action="NewRequest" asp-route-id="@item.ProductID">Buy Stock</a>
+               
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

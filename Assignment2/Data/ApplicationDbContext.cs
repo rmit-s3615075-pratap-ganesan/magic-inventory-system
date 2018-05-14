@@ -20,6 +20,7 @@ namespace Assignment2.Data
         public DbSet<OrderHistory> OrderHistory { get; set; }
 
 
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {

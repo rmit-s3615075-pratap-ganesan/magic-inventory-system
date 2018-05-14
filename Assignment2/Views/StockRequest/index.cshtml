@@ -20,11 +20,11 @@
             </th>
             
 
-           <!-- <th>
-                @Html.DisplayNameFor(model => model.Store.Name)
+            <th>
+                @Html.DisplayNameFor(model => model.ProductID)
             </th>
 
-            <th>
+          <!--  <th>
                 @Html.DisplayNameFor(model => model.Quantity)
             </th>-->
             
@@ -39,6 +39,11 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Product.Name)
+
+            </td>
+             <td>
+                @Html.DisplayFor(modelItem => item.ProductID)
+
             </td>
            <!-- <td>
                 @Html.DisplayNameFor(modelItem => item.Store.Name)
@@ -58,6 +63,7 @@
 @{
     ViewData["Title"] = "View";
 }
+
 
 
 

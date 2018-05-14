@@ -1,19 +1,17 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Assignment2.Data;
 using Assignment2.Models;
-using Assignment2.Utility;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
-
 
 namespace Assignment2.Controllers
 {
-    [Authorize(Roles = Constants.WholeSaleRole)] 
+    [Authorize(Roles = "WholeSale")]
     public class OwnerController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -23,93 +21,85 @@ namespace Assignment2.Controllers
             _context = context;
         }
 
-
-        // Auto-parsed variables coming in from the request - there is a form on the page to send this data.
-    
-        public async Task<IActionResult> Index(
-            string sortOrder, string currentFilter,
-            string searchString, int? page)
+        // GET: Owner
+        public async Task<IActionResult> Index()
         {
-            ViewData["CurrentSort"] = sortOrder;
-            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            ViewData["QtySortParm"] = sortOrder == "Qty" ? "qty_desc" : "Qty";
-
-            if (searchString != null)
-            {
-                page = 1;
-            }
-            else
-            {
-                searchString = currentFilter;
-            }
-            ViewData["CurrentFilter"] = searchString;
-
-
-
-            // Eager loading the Product table - join between OwnerInventory and the Product table.
-            var query = _context.OwnerInventory.Include(x => x.Product).Select(x => x);
-
-            if (!string.IsNullOrWhiteSpace(searchString))
-            {
-                query = query.Where(x => x.Product.Name.Contains(searchString));
-
-            }
-
-            switch (sortOrder)
-            {
-                case "name_desc":
-                    query = query.OrderByDescending(s => s.Product.Name);
-                    break;
-                case "Qty":
-                    query = query.OrderBy(s => s.StockLevel);
-                    break;
-                case "date_desc":
-                    query = query.OrderByDescending(s => s.StockLevel);
-                    break;
-                default:
-                    query = query.OrderBy(s => s.Product.Name);
-                    break;
-            }
-
-            int pageSize = 3;
-            //var viewModel = new OwnerInventoryViewModel
-            //{
-            //    Inventory = await PaginatedList<OwnerInventory>
-            //       .CreateAsync(query.AsNoTracking(), page ?? 1, pageSize)
-            //};
-
-            //// Passing a List<OwnerInventory> model object to the View.
-            //return View(viewModel);
-
-            return View(await PaginatedList<OwnerInventory>
-                        .CreateAsync(query.AsNoTracking(), page ?? 1, pageSize));
+            var applicationDbContext = _context.OwnerInventory.Include(o => o.Product);
+            return View(await applicationDbContext.ToListAsync());
+        }
+        // GET: Owner Stock Req
+        public async Task<IActionResult> DisplayRequests()
+        {
+            var applicationDbContext = _context.StockRequest.Include(x => x.Product).Select(x => x);
+            return View(await applicationDbContext.ToListAsync());
         }
 
-
-        public async Task<IActionResult> Reset(int? id)
+        // GET: Owner/Details/5
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var query = _context.OwnerInventory
-                                .Include(x => x.Product)
-                                .Where(x => x.ProductID == id).First<OwnerInventory>();
-
-
-            if (query == null)
+            var ownerInventory = await _context.OwnerInventory
+                .Include(o => o.Product)
+                .SingleOrDefaultAsync(m => m.ProductID == id);
+            if (ownerInventory == null)
             {
                 return NotFound();
             }
-              
-            return View(query);
+
+            return View(ownerInventory);
         }
 
+        // GET: Owner/Create
+        public IActionResult Create()
+        {
+            ViewData["ProductID"] = new SelectList(_context.Products, "ProductID", "ProductID");
+            return View();
+        }
 
+        // POST: Owner/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Reset(int id, [Bind("ProductID,StockLevel")] OwnerInventory ownerInventory)
+        public async Task<IActionResult> Create([Bind("ProductID,StockLevel")] OwnerInventory ownerInventory)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(ownerInventory);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["ProductID"] = new SelectList(_context.Products, "ProductID", "ProductID", ownerInventory.ProductID);
+            return View(ownerInventory);
+        }
+
+        // GET: Owner/Edit/5
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var ownerInventory = await _context.OwnerInventory.SingleOrDefaultAsync(m => m.ProductID == id);
+            if (ownerInventory == null)
+            {
+                return NotFound();
+            }
+            ViewData["ProductID"] = new SelectList(_context.Products, "ProductID", "ProductID", ownerInventory.ProductID);
+            return View(ownerInventory);
+        }
+
+        // POST: Owner/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("ProductID,StockLevel")] OwnerInventory ownerInventory)
         {
             if (id != ownerInventory.ProductID)
             {
@@ -136,17 +126,48 @@ namespace Assignment2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-           // ViewData["ProductID"] = new SelectList(_context.Products, "ProductID", "Name", ownerInventory.ProductID);
+            ViewData["ProductID"] = new SelectList(_context.Products, "ProductID", "ProductID", ownerInventory.ProductID);
             return View(ownerInventory);
         }
 
+        // GET: Owner/Delete/5
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var ownerInventory = await _context.OwnerInventory
+                .Include(o => o.Product)
+                .SingleOrDefaultAsync(m => m.ProductID == id);
+            if (ownerInventory == null)
+            {
+                return NotFound();
+            }
+
+            return View(ownerInventory);
+        }
+
+        // POST: Owner/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var ownerInventory = await _context.OwnerInventory.SingleOrDefaultAsync(m => m.ProductID == id);
+            _context.OwnerInventory.Remove(ownerInventory);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
 
         private bool OwnerInventoryExists(int id)
         {
             return _context.OwnerInventory.Any(e => e.ProductID == id);
         }
 
-
+        public IActionResult Dashboard()
+        {
+            return View();
+        }
     }
-
 }

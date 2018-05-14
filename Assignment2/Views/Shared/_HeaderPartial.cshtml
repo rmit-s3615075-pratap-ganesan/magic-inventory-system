@@ -1,0 +1,46 @@
+@using Microsoft.AspNetCore.Identity
+@using Assignment2.Models
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@if (!SignInManager.IsSignedIn(User) )
+{
+  <ul class="nav navbar-nav">
+    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
+    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+    <li><a asp-area="" asp-controller="Customer" asp-action="Index">Customer</a></li>
+  </ul>
+   
+}
+else
+{
+     if ( this.User.IsInRole("Retail") )
+     {
+         <ul class="nav navbar-nav">
+            <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+            <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
+            <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+            <li><a asp-area="" asp-controller="Franchise" asp-action="Dashboard">Retail</a></li>
+         </ul>
+     }
+     else if (this.User.IsInRole("WholeSale") )
+    {
+        <ul class="nav navbar-nav">
+         <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+         <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
+         <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+         <li><a asp-area="" asp-controller="Owner" asp-action="Dashboard">Owner</a></li>
+        </ul>
+    }
+    else
+    {
+        <ul class="nav navbar-nav">
+            <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+            <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
+            <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+            <li><a asp-area="" asp-controller="Customer" asp-action="Index">Customer</a></li>
+         </ul>       
+    }
+}

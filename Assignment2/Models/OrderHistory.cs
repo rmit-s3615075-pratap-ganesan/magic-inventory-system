@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 namespace Assignment2.Models
 {
     public class OrderHistory
@@ -12,3 +12,4 @@ namespace Assignment2.Models
         public decimal TotalPrice { get; set; }
     }
 }
+

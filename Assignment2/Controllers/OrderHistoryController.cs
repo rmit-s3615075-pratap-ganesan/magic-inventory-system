@@ -26,6 +26,7 @@ namespace Assignment2.Controllers
             return View();
         }
 
+
         public async Task<IActionResult> Create(){
             CustomerOrder newOrder = new CustomerOrder();
             newOrder.UserEmail = "pratap1288@gmail.com";
@@ -56,10 +57,9 @@ namespace Assignment2.Controllers
                 await _context.SaveChangesAsync();
             }
 
-           
-                    
             return RedirectToAction(nameof(Index));
 
         }
     }
 }
+

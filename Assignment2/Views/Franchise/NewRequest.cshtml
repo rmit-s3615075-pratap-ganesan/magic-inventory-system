@@ -1,28 +1,27 @@
-﻿@model OwnerInventory
+﻿@model Assignment2.Models.StoreInventory
+
 
 @{
-    ViewData["Title"] = "Reset Stock";
+    ViewData["Title"] = "Edit";
 }
 
-<h2>Reset Product</h2>
+<h2>Edit</h2>
 
-<h4>OwnerInventory</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.ProductID)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Product.Name)
-        </dd>
-    </dl>
-
+<h4>StoreInventory</h4>
 <hr />
+
+<h2> Details </h2>
+<h5>    @Html.DisplayNameFor(model => model.ProductID) </h5>
+<h6>    @Html.DisplayFor(model => model.Product.ProductID)  </h6>
+<h5>    @Html.DisplayNameFor(model => model.Product.Name) </h5>
+<h6>    @Html.DisplayFor(model => model.Product.Name)  </h6>
+
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Reset">
+        <form asp-action="NewRequest">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ProductID" />
+            <input type="hidden" asp-for="StoreID" />
+            <input type="hidden" asp-for="Product.ProductID" />
             <div class="form-group">
                 <label asp-for="StockLevel" class="control-label"></label>
                 <input asp-for="StockLevel" class="form-control" />

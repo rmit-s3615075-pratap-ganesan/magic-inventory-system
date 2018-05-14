@@ -1,21 +1,19 @@
-@model IEnumerable<Assignment2.Models.OwnerInventory>
+@model IEnumerable<Assignment2.Models.StoreInventory>
 
 @{
-    ViewData["Title"] = "Display Inventory";
+    ViewData["Title"] = "Store Inventory";
+   
+   
 }
 
-<h2>Owner Inventory</h2>
-
+ <h2>Store Inventory  - @Html.Raw(ViewBag.myData)    </h2>
 <table class="table">
     <thead>
         <tr>
-             <th>
-                @Html.DisplayNameFor(model => model.ProductID)
-            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Product)
             </th>
-           <th>
+             <th>
                 @Html.DisplayNameFor(model => model.StockLevel)
             </th>
             <th></th>
@@ -28,18 +26,9 @@
                 @Html.DisplayFor(modelItem => item.Product.ProductID)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Product.Name)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.StockLevel)
             </td>
         </tr>
-        
 }
-        <tr> 
-            <td>
-                @Html.ActionLink("Back to Index", "Dashboard" , new { @class = "btn btn-primary" })          
-            </td>
-        </tr>
     </tbody>
 </table>
