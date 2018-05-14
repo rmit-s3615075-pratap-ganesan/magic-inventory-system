@@ -5,10 +5,11 @@ using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Assignment2.Models;
-using Microsoft.AspNetCore.Http;
-using Assignment2.Data;
 using Assignment2.Models.CartViewModels;
 using Assignment2.Utility;
+using Assignment2.Data;
+using Microsoft.AspNetCore.Http;
+
 
 namespace Assignment2.Controllers
 {
@@ -45,10 +46,10 @@ namespace Assignment2.Controllers
 
             var query = _context.StoreInventory
                                 .Include(x => x.Product)
-                                .Include(x=>x.Store)
+                                .Include(x => x.Store)
                                 .Select(x => x);
             //var storeID = _context.Store.Where(x=>x.Name.Contains("bourne")).Select(x=>x.StoreID);
-                                
+
 
             if (!string.IsNullOrWhiteSpace(searchString))
             {
@@ -79,24 +80,24 @@ namespace Assignment2.Controllers
         }
 
 
-        public async Task<IActionResult> Buy(int? storeid,int? id)
+        public async Task<IActionResult> Buy(int? storeid, int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var query =  _context.StoreInventory
+            var query = _context.StoreInventory
                                 .Include(x => x.Product)
                                 .Include(x => x.Store)
                                  .Where(x => x.StoreID == storeid)
                                 .Where(x => x.ProductID == id).First<StoreInventory>();
-                                 
+
             if (query == null)
             {
                 return NotFound();
             }
-           
+
             return View(query);
         }
 
@@ -112,10 +113,10 @@ namespace Assignment2.Controllers
 
             CartViewModel cart = new CartViewModel();
             cart.ProductID = Convert.ToInt32("" + Request.Form["ProductID"]);
-            cart.ProductName = ""+Request.Form["Product.Name"];
+            cart.ProductName = "" + Request.Form["Product.Name"];
             cart.StoreID = Convert.ToInt32("" + Request.Form["StoreID"]);
             cart.StoreName = "" + Request.Form["Store.Name"];
-            cart.Price = Convert.ToDecimal(""+Request.Form["Product.Price"]);
+            cart.Price = Convert.ToDecimal("" + Request.Form["Product.Price"]);
             cart.Quantity = stockLevel ?? 0;
             cart.TotalPrice = cart.Quantity * cart.Price;
 
@@ -126,12 +127,13 @@ namespace Assignment2.Controllers
         }
 
 
-        public async Task<IActionResult> Cart(){
+        public async Task<IActionResult> Cart()
+        {
             return View(getSessionItems());
         }
 
 
-        public async Task<IActionResult> DeleteCart(int prodID,int storeID)
+        public async Task<IActionResult> DeleteCart(int prodID, int storeID)
         {
 
             HttpContext.Session.Remove(prodID + "/" + storeID);
@@ -140,11 +142,12 @@ namespace Assignment2.Controllers
 
         public async Task<IActionResult> EditCart(int prodID, int storeID)
         {
-            return  RedirectToAction("Action", "controller", new { @storeid = storeID,@id=prodID });
+            return RedirectToAction("Action", "controller", new { @storeid = storeID, @id = prodID });
         }
 
 
-        public List<CartViewModel> getSessionItems(){
+        public List<CartViewModel> getSessionItems()
+        {
             decimal totalPrice = 0;
             List<CartViewModel> shoppingList = new List<CartViewModel>();
 
@@ -160,6 +163,7 @@ namespace Assignment2.Controllers
 
 
 
-         
+
     }
 }
+

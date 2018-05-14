@@ -12,7 +12,7 @@ namespace Assignment2.Data
     {
         public static async Task Initialize(IServiceProvider serviceProvider)
         {
-            DoSomething(serviceProvider);
+           // DoSomething(serviceProvider);
 
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
@@ -27,10 +27,10 @@ namespace Assignment2.Data
 
             var userManager = serviceProvider.GetService<UserManager<ApplicationUser>>();
 
-           // await EnsureUserHasRole(userManager, "retail@example.com",Constants.RetailRole);
-            //await EnsureUserHasRole(userManager, "nirajbohra@gmail.com",Constants.WholeSaleRole);
-            //await EnsureUserHasRole(userManager, "s3578115@student.rmit.edu.au",Constants.RetailRole);
-
+           // await EnsureUserHasRole(userManager, "s3635887@student.rmit.edu.au",Constants.WholeSaleRole);
+           // await EnsureUserHasRole(userManager, "nirajbohra@gmail.com",Constants.WholeSaleRole);
+            await EnsureUserHasRole(userManager, "s3578115@student.rmit.edu.au",Constants.RetailRole);
+            //await EnsureUserHasStoreID(userManager, "s3578115@student.rmit.edu.au", Constants.MelbourneCBD);
             await EnsureUserHasStoreID(userManager, "s3578115@student.rmit.edu.au",Constants.MelbourneCBD);
         }
 

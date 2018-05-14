@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Assignment2.Migrations
 {
-    public partial class init2 : Migration
+    public partial class initUpdate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -21,6 +21,20 @@ namespace Assignment2.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetRoles", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CustomerOrder",
+                columns: table => new
+                {
+                    ReceiptID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    TransactionDate = table.Column<DateTime>(nullable: false),
+                    UserEmail = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CustomerOrder", x => x.ReceiptID);
                 });
 
             migrationBuilder.CreateTable(
@@ -68,6 +82,27 @@ namespace Assignment2.Migrations
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OrderHistory",
+                columns: table => new
+                {
+                    ReceiptID = table.Column<int>(nullable: false),
+                    ProductName = table.Column<string>(nullable: false),
+                    StoreName = table.Column<string>(nullable: false),
+                    Quantity = table.Column<int>(nullable: false),
+                    TotalPrice = table.Column<decimal>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrderHistory", x => new { x.ReceiptID, x.ProductName, x.StoreName });
+                    table.ForeignKey(
+                        name: "FK_OrderHistory_CustomerOrder_ReceiptID",
+                        column: x => x.ReceiptID,
+                        principalTable: "CustomerOrder",
+                        principalColumn: "ReceiptID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -336,6 +371,9 @@ namespace Assignment2.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "OrderHistory");
+
+            migrationBuilder.DropTable(
                 name: "OwnerInventory");
 
             migrationBuilder.DropTable(
@@ -349,6 +387,9 @@ namespace Assignment2.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "CustomerOrder");
 
             migrationBuilder.DropTable(
                 name: "Products");

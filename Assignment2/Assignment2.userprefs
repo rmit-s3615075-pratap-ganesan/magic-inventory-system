@@ -1,15 +1,8 @@
 ﻿<Properties StartupConfiguration="{35159736-7193-4783-84E0-DEAE6550EE14}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Startup.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Migrations/20180513131556_initUpdate.Designer.cs">
     <Files>
-      <File FileName="Data/SeedData.cs" Line="268" Column="68" />
-      <File FileName="Models/ApplicationUser.cs" Line="12" Column="8" />
-      <File FileName="Data/ApplicationDbContext.cs" Line="11" Column="62" />
-      <File FileName="Controllers/FranchiseController.cs" Line="55" Column="95" />
-      <File FileName="Views/Franchise/NewInventory.cshtml" Line="2" Column="1" />
-      <File FileName="Views/Franchise/DisplayStock.cshtml" Line="1" Column="1" />
-      <File FileName="Controllers/OwnerController.cs" Line="1" Column="1" />
-      <File FileName="Controllers/CustomerController.cs" Line="76" Column="31" />
-      <File FileName="Startup.cs" Line="17" Column="23" />
+      <File FileName="Migrations/20180513131556_initUpdate.cs" Line="1" Column="1" />
+      <File FileName="Migrations/20180513131556_initUpdate.Designer.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
@@ -18,6 +11,7 @@
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches>
     <Watch file="Views/Franchise/Edit.cshtml" line="17" offsetX="322" offsetY="240" expression="            " liveUpdate="False" />
+    <Watch file="Views/Franchise/NewRequest.cshtml" line="24" offsetX="502" offsetY="345" expression="ProductID" liveUpdate="False" />
   </MonoDevelop.Ide.DebuggingService.PinnedWatches>
   <MultiItemStartupConfigurations />
   <MonoDevelop.Ide.ItemProperties.Assignment2 PreferredExecutionTarget="MonoDevelop.Default" />

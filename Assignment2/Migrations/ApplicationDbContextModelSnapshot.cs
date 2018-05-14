@@ -75,6 +75,37 @@ namespace Assignment2.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("Assignment2.Models.CustomerOrder", b =>
+                {
+                    b.Property<int>("ReceiptID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("TransactionDate");
+
+                    b.Property<string>("UserEmail");
+
+                    b.HasKey("ReceiptID");
+
+                    b.ToTable("CustomerOrder");
+                });
+
+            modelBuilder.Entity("Assignment2.Models.OrderHistory", b =>
+                {
+                    b.Property<int>("ReceiptID");
+
+                    b.Property<string>("ProductName");
+
+                    b.Property<string>("StoreName");
+
+                    b.Property<int>("Quantity");
+
+                    b.Property<decimal>("TotalPrice");
+
+                    b.HasKey("ReceiptID", "ProductName", "StoreName");
+
+                    b.ToTable("OrderHistory");
+                });
+
             modelBuilder.Entity("Assignment2.Models.OwnerInventory", b =>
                 {
                     b.Property<int>("ProductID");
@@ -260,6 +291,14 @@ namespace Assignment2.Migrations
                     b.HasOne("Assignment2.Models.Store", "Store")
                         .WithMany()
                         .HasForeignKey("StoreID");
+                });
+
+            modelBuilder.Entity("Assignment2.Models.OrderHistory", b =>
+                {
+                    b.HasOne("Assignment2.Models.CustomerOrder", "CustomerOrder")
+                        .WithMany("OrderHistory")
+                        .HasForeignKey("ReceiptID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Assignment2.Models.OwnerInventory", b =>

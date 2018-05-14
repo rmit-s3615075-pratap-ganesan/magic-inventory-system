@@ -1,22 +1,22 @@
 @model IEnumerable<Assignment2.Models.OwnerInventory>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Display Inventory";
 }
 
-<h2>Index</h2>
+<h2>Owner Inventory</h2>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.StockLevel)
-                </th>
+             <th>
+                @Html.DisplayNameFor(model => model.ProductID)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Product)
+            </th>
+           <th>
+                @Html.DisplayNameFor(model => model.StockLevel)
             </th>
             <th></th>
         </tr>
@@ -25,17 +25,21 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.StockLevel)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Product.ProductID)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ProductID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ProductID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ProductID">Delete</a>
+                @Html.DisplayFor(modelItem => item.Product.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StockLevel)
             </td>
         </tr>
+        
 }
+        <tr> 
+            <td>
+                @Html.ActionLink("Back to Index", "Dashboard" , new { @class = "btn btn-primary" })          
+            </td>
+        </tr>
     </tbody>
 </table>

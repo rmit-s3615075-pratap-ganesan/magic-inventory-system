@@ -8,18 +8,21 @@ using Microsoft.EntityFrameworkCore;
 using Assignment2.Data;
 using Assignment2.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Assignment2.Controllers
 {
+    [Authorize(Roles = "Retail")]
     public class FranchiseController : Controller
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
-
-        public FranchiseController(UserManager<ApplicationUser> userManager, ApplicationDbContext context)
+        private readonly SignInManager<ApplicationUser> _sign;
+        public FranchiseController(UserManager<ApplicationUser> userManager, ApplicationDbContext context , SignInManager<ApplicationUser> sign)
         {
             _context = context;
             _userManager = userManager;
+            _sign = sign; 
         }
 
         // GET: Franchise
@@ -42,20 +45,90 @@ namespace Assignment2.Controllers
                         .Include(x => x.Product)
                         .Select(x => x)
                         .Where(x => x.StoreID == user.StoreID);
-
+           
             return View(await query.ToListAsync());
         }
 
         public async Task<IActionResult> NewInventory()
         {
-            // Connect store and owner and return those which are not in store.
+
+            var model = new List<OwnerInventory>();
             var user = await _userManager.GetUserAsync(User);
             ViewBag.myData = _context.Stores.Where(x => x.StoreID == user.StoreID).Select(x => x.Name).First();
 
-            var dbDataSorted = _context.OwnerInventory.Include(x => x.Product).Select(x => x);;
-
-            return View(dbDataSorted.AsEnumerable());
+            var storeProduct = _context.StoreInventory.Where(x => x.StoreID == user.StoreID).Select(x => x.Product).ToList();
+            var newItems = _context.OwnerInventory.Select(x => x.Product).ToList().Except(storeProduct).ToList();
+          
+            return View(newItems);
         }
+
+        // GET: Franchise/EditNewRequest/5
+        public async Task<IActionResult> NewRequest(int? id)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var storeInventory = new StoreInventory();
+            storeInventory.StoreID = user.StoreID ?? 0;
+            storeInventory.Product = _context.Products.Where(x => x.ProductID == id).First();   
+                 
+
+            if (storeInventory == null)
+            {
+                return NotFound();
+            }
+           
+            return View(storeInventory);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> NewRequest([Bind("StoreID,ProductID,StockLevel")] StoreInventory storeInventory)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            var stockLevel = storeInventory.StockLevel;
+            var productID = storeInventory.ProductID;
+            var storeID = storeInventory.StoreID;
+
+            if (user.StoreID != storeInventory.StoreID)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    StockRequest stockReq = new StockRequest();
+                    stockReq.ProductID = Convert.ToInt32("" + Request.Form["Product.ProductID"]);
+                    stockReq.Quantity = stockLevel;
+                    stockReq.StoreID = storeID;
+                    _context.StockRequest.Add(stockReq);
+
+
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!StoreInventoryExists(storeInventory.StoreID))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(DisplayStock));
+            }
+            ViewData["ProductID"] = new SelectList(_context.Products, "ProductID", "ProductID", storeInventory.ProductID);
+            ViewData["StoreID"] = new SelectList(_context.Stores, "StoreID", "StoreID", storeInventory.StoreID);
+            return View(storeInventory);
+        }
+
+     
 
         // GET: Franchise/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -78,31 +151,7 @@ namespace Assignment2.Controllers
             return View(storeInventory);
         }
 
-        // GET: Franchise/Create
-        public IActionResult Create()
-        {
-            ViewData["ProductID"] = new SelectList(_context.Products, "ProductID", "ProductID");
-            ViewData["StoreID"] = new SelectList(_context.Stores, "StoreID", "StoreID");
-            return View();
-        }
-
-        // POST: Franchise/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("StoreID,ProductID,StockLevel")] StoreInventory storeInventory)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(storeInventory);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(DisplayStock));
-            }
-            ViewData["ProductID"] = new SelectList(_context.Products, "ProductID", "ProductID", storeInventory.ProductID);
-            ViewData["StoreID"] = new SelectList(_context.Stores, "StoreID", "StoreID", storeInventory.StoreID);
-            return View(storeInventory);
-        }
+     
 
         // GET: Franchise/Edit/5
         public async Task<IActionResult> Edit(int? id)

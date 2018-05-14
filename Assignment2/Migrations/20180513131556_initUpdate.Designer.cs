@@ -11,8 +11,8 @@ using System;
 namespace Assignment2.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180512071207_validMigration5")]
-    partial class validMigration5
+    [Migration("20180513131556_initUpdate")]
+    partial class initUpdate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -74,6 +74,37 @@ namespace Assignment2.Migrations
                     b.HasIndex("StoreID");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("Assignment2.Models.CustomerOrder", b =>
+                {
+                    b.Property<int>("ReceiptID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("TransactionDate");
+
+                    b.Property<string>("UserEmail");
+
+                    b.HasKey("ReceiptID");
+
+                    b.ToTable("CustomerOrder");
+                });
+
+            modelBuilder.Entity("Assignment2.Models.OrderHistory", b =>
+                {
+                    b.Property<int>("ReceiptID");
+
+                    b.Property<string>("ProductName");
+
+                    b.Property<string>("StoreName");
+
+                    b.Property<int>("Quantity");
+
+                    b.Property<decimal>("TotalPrice");
+
+                    b.HasKey("ReceiptID", "ProductName", "StoreName");
+
+                    b.ToTable("OrderHistory");
                 });
 
             modelBuilder.Entity("Assignment2.Models.OwnerInventory", b =>
@@ -261,6 +292,14 @@ namespace Assignment2.Migrations
                     b.HasOne("Assignment2.Models.Store", "Store")
                         .WithMany()
                         .HasForeignKey("StoreID");
+                });
+
+            modelBuilder.Entity("Assignment2.Models.OrderHistory", b =>
+                {
+                    b.HasOne("Assignment2.Models.CustomerOrder", "CustomerOrder")
+                        .WithMany("OrderHistory")
+                        .HasForeignKey("ReceiptID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Assignment2.Models.OwnerInventory", b =>

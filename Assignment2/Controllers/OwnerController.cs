@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Assignment2.Data;
 using Assignment2.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Assignment2.Controllers
 {
+    [Authorize(Roles = "WholeSale")]
     public class OwnerController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -23,6 +25,12 @@ namespace Assignment2.Controllers
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.OwnerInventory.Include(o => o.Product);
+            return View(await applicationDbContext.ToListAsync());
+        }
+        // GET: Owner Stock Req
+        public async Task<IActionResult> DisplayRequests()
+        {
+            var applicationDbContext = _context.StockRequest.Include(x => x.Product).Select(x => x);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -155,6 +163,11 @@ namespace Assignment2.Controllers
         private bool OwnerInventoryExists(int id)
         {
             return _context.OwnerInventory.Any(e => e.ProductID == id);
+        }
+
+        public IActionResult Dashboard()
+        {
+            return View();
         }
     }
 }
