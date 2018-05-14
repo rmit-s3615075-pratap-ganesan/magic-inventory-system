@@ -92,6 +92,12 @@ namespace Assignment2.Controllers
         }
 
 
+        public IActionResult StockRequest(string productName)
+        {
+            // Eager loading the Product table - join between OwnerInventory and the Product table.
+            var query = _context.StockRequest.Include(x => x.Product).Include(x => x.Store).Select(x => x);
+            return View(query.ToList());
+        }
 
     }
 }
