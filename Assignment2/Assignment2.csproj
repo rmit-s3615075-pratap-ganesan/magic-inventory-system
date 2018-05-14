@@ -1,3 +1,4 @@
+
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
@@ -8,10 +9,10 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.1" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.2" PrivateAssets="All" />
-    <PackageReference Include="angularjs" Version="1.6.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="2.0.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,10 +22,19 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Views\Owner\" />
+    <Folder Include="Views\StockRequest\" />
+    <Folder Include="Views\Customer\" />
+    <Folder Include="Models\CartViewModels\" />
     <Folder Include="Migrations\" />
     <Folder Include="Views\StockRequest\" />
+    <Folder Include="Views\OrderHistory\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Remove="DisplayStock.cshtml" />
+    <Compile Remove="Controllers\StockRequestController.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Views\StockRequest\ViewData.cshtml" />
   </ItemGroup>
 </Project>
+

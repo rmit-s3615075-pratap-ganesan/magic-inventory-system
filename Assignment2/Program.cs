@@ -19,6 +19,7 @@ namespace Assignment2
         {
             var host = BuildWebHost(args);
 
+
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
@@ -33,6 +34,7 @@ namespace Assignment2
                   //  throw;
                 //}
             }
+
 
             BuildWebHost(args).Run();
         }

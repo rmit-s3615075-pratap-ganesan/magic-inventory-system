@@ -26,8 +26,8 @@ namespace Assignment2.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Create()
-        {
+
+        public async Task<IActionResult> Create(){
             CustomerOrder newOrder = new CustomerOrder();
             newOrder.UserEmail = "pratap1288@gmail.com";
             newOrder.TransactionDate = DateTime.Now;
@@ -46,8 +46,7 @@ namespace Assignment2.Controllers
             }
 
             OrderHistory newOrderHistory = new OrderHistory();
-            foreach (CartViewModel cart in shoppingList)
-            {
+            foreach(CartViewModel cart in shoppingList){
                 newOrderHistory = new OrderHistory();
                 newOrderHistory.ReceiptID = receiptID;
                 newOrderHistory.ProductName = cart.ProductName;
@@ -57,8 +56,6 @@ namespace Assignment2.Controllers
                 _context.Add(newOrderHistory);
                 await _context.SaveChangesAsync();
             }
-
-
 
             return RedirectToAction(nameof(Index));
 
