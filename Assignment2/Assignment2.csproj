@@ -23,15 +23,11 @@
 
   <ItemGroup>
     <Folder Include="Views\Owner\" />
-    <Folder Include="Views\StockRequest\" />
     <Folder Include="Views\Customer\" />
     <Folder Include="Models\CartViewModels\" />
     <Folder Include="Migrations\" />
     <Folder Include="Views\StockRequest\" />
     <Folder Include="Views\OrderHistory\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Remove="Controllers\StockRequestController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Views\StockRequest\ViewData.cshtml" />

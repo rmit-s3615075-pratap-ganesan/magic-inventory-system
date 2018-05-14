@@ -29,10 +29,11 @@ namespace Assignment2.Data
 
            // await EnsureUserHasRole(userManager, "s3635887@student.rmit.edu.au",Constants.WholeSaleRole);
            // await EnsureUserHasRole(userManager, "nirajbohra@gmail.com",Constants.WholeSaleRole);
-            await EnsureUserHasRole(userManager, "s3578115@student.rmit.edu.au",Constants.RetailRole);
-            //await EnsureUserHasStoreID(userManager, "s3578115@student.rmit.edu.au", Constants.MelbourneCBD);
-            await EnsureUserHasStoreID(userManager, "s3578115@student.rmit.edu.au",Constants.MelbourneCBD);
-        }
+           // await EnsureUserHasRole(userManager, "s3615075@student.rmit.edu.au",Constants.RetailRole);
+           // await EnsureUserHasStoreID(userManager, "s3615075@student.rmit.edu.au", rneCBD);
+           // await EnsureUserHasRole(userManager, "pratap1288@gmail.com",Constants.WholeSaleRole);
+         //  await EnsureUserHasStoreID(userManager, "s3615075@student.rmit.edu.au", Constants.MelbourneCBD);
+        }   
 
         private static void DoSomething(IServiceProvider serviceProvider)
         {
