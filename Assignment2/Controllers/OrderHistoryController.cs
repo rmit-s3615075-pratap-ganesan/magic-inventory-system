@@ -54,6 +54,9 @@ namespace Assignment2.Controllers
                 newOrderHistory.Quantity = cart.Quantity;
                 newOrderHistory.TotalPrice = cart.TotalPrice;
                 _context.Add(newOrderHistory);
+
+               // var storeContext = _context.StoreInventory.Where(x => x.ProductID == productID).Select(x => x).First();
+               // storeContext.StockLevel += stockRequestToUpdate.Quantity;
                 await _context.SaveChangesAsync();
             }
 
