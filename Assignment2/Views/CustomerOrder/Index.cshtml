@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CustomerOrder>
+﻿@model HistoryGroupData
 
 @{
     ViewBag.Title = "Magic e-commerce";
@@ -21,9 +21,16 @@
         </tr>
     </thead>
     <tbody>        
-        @foreach(var item in Model) {
-            <tr>
-                <td>
+        @foreach(var item in Model.customerOrders) {
+
+            string selectedRow = "";
+            if (item.ReceiptID == (int?)ViewData["ReceiptID"])
+            {
+                selectedRow = "success";
+            }
+        
+            <tr class="@selectedRow">
+               <td>
                     @Html.DisplayFor(modelItem => item.ReceiptID)
                 </td>
                 <td>
@@ -33,13 +40,44 @@
                     @Html.DisplayFor(modelItem => item.TransactionDate)
                 </td>
                 <td>
-                <a asp-action="Detail" asp-route-id="@item.ReceiptID">Details</a>
+                <a asp-action="Index" asp-route-id="@item.ReceiptID">Select</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
 
+@if (Model.orderHistories != null)
+{
+    <h3>Products Order with the Receipt</h3>
+    <table class="table">
+        <tr>
+            <th>Product Name</th>
+            <th>Store Name</th>
+            <th>Quantity</th>
+            <th> Total Price</th>
+        </tr>
+
+        @foreach (var item in Model.orderHistories)
+        {
+            <tr>
+                <td>
+                    @item.ProductName
+                </td>
+                <td>
+                    @item.StoreName
+                </td>
+                <td>
+                    @item.Quantity
+                </td>
+                <td>
+                    @item.TotalPrice
+                </td>
+            </tr>
+        }
+
+    </table>
+}
 
 
 
