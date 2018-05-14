@@ -12,7 +12,8 @@ namespace Assignment2.Models
         public int ReceiptID { get; set; }
         public string UserEmail { get; set; }
         public DateTime TransactionDate { get; set; }
-        public ICollection<OrderHistory> OrderHistory { get; } = new List<OrderHistory>();
+
+        public ICollection<OrderHistory> OrderHistories { get; set; }
 
     }
 }

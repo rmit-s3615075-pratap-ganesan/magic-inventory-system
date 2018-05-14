@@ -30,6 +30,7 @@
     <Folder Include="Views\StockRequest\" />
     <Folder Include="Views\OrderHistory\" />
     <Folder Include="Views\CustomerOrder\" />
+    <Folder Include="Models\OrderHistoryModels\" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Views\StockRequest\ViewData.cshtml" />
