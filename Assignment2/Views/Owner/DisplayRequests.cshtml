@@ -6,8 +6,11 @@
    
 }
 
- <h2> Stock Requests </h2>
-<table class="table">
+<center>
+    <img src="~/images/stockRequest.png" width="100px"/> 
+    <h2> Stock Requests </h2> 
+</center>
+<table id="table">
     <thead>
         <tr>
             <th>
@@ -22,7 +25,7 @@
                <th>
                 @Html.DisplayNameFor(model => model.StoreID)
             </th>
-            <th></th>
+           
         </tr>
     </thead>
     <tbody>
@@ -42,10 +45,6 @@
             </td>
         </tr>
 }
-        <tr> 
-            <td>
-                @Html.ActionLink("Back to Index", "Dashboard" , new { @class = "btn btn-primary" })          
-            </td>
-        </tr>
     </tbody>
 </table>
+ <center> <a  id="button" asp-action="Dashboard"> Dashboard</a> </center>

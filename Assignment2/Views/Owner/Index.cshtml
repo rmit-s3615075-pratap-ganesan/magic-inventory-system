@@ -4,9 +4,12 @@
     ViewData["Title"] = "Display Inventory";
 }
 
-<h2>Owner Inventory</h2>
+<center> 
+    <img src="~/images/inventory.png" width="200px"/> 
+    <h2>Owner Inventory</h2>
+</center>
 
-<table class="table">
+<table id="table">
     <thead>
         <tr>
              <th>
@@ -18,7 +21,7 @@
            <th>
                 @Html.DisplayNameFor(model => model.StockLevel)
             </th>
-            <th></th>
+           
         </tr>
     </thead>
     <tbody>
@@ -36,10 +39,9 @@
         </tr>
         
 }
-        <tr> 
-            <td>
-                @Html.ActionLink("Back to Index", "Dashboard" , new { @class = "btn btn-primary" })          
-            </td>
-        </tr>
+
     </tbody>
 </table>
+
+ <center> <a  id="button" asp-action="Dashboard"> Dashboard</a> </center>
+       

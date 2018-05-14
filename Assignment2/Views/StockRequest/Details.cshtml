@@ -40,7 +40,20 @@
             <div class="form-group">
                 <input type="hidden" asp-for="ProductID"/>
                 <input type="hidden" asp-for="StockRequestID"/>
-                <input type="submit" value="Process" class="btn btn-default" />
+                @{
+                    var stock = Convert.ToInt32(ViewData["stockAvailability"]);
+                   var quantity = Model.Quantity;
+
+                    if (  stock  < quantity )
+                    {
+                      <input type="submit" value="Process" class="btn btn-default" disabled="true" />
+                    }
+                    else
+                    {
+                       <input type="submit" value="Process" class="btn btn-default"  />
+                    }
+                 }
+               
             </div>
         </form>
     </div>
