@@ -87,11 +87,11 @@ namespace Assignment2.Controllers
                 return NotFound();
             }
 
-            var query = _context.StoreInventory
+            var query = await _context.StoreInventory
                                 .Include(x => x.Product)
                                 .Include(x => x.Store)
                                  .Where(x => x.StoreID == storeid)
-                                .Where(x => x.ProductID == id).First<StoreInventory>();
+                                .Where(x => x.ProductID == id).FirstAsync<StoreInventory>();
 
             if (query == null)
             {
@@ -104,22 +104,22 @@ namespace Assignment2.Controllers
 
         [HttpPost, ActionName("Buy")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> BuyPost(int? stockLevel)
+        public async Task<IActionResult> BuyPost(StoreInventory storeInventory)
         {
-            if (stockLevel == null)
+            if (storeInventory.StockLevel == 0)
             {
                 return NotFound();
             }
 
             CartViewModel cart = new CartViewModel();
-            cart.ProductID = Convert.ToInt32("" + Request.Form["ProductID"]);
-            cart.ProductName = "" + Request.Form["Product.Name"];
-            cart.StoreID = Convert.ToInt32("" + Request.Form["StoreID"]);
-            cart.StoreName = "" + Request.Form["Store.Name"];
-            cart.Price = Convert.ToDecimal("" + Request.Form["Product.Price"]);
-            cart.Quantity = stockLevel ?? 0;
+            cart.ProductID = storeInventory.ProductID;
+            cart.ProductName = storeInventory.Product.Name;
+            cart.StoreID = storeInventory.StoreID;
+            cart.StoreName = storeInventory.Store.Name;
+            cart.Price = storeInventory.Product.Price;
+            cart.Quantity = storeInventory.StockLevel;
             cart.TotalPrice = cart.Quantity * cart.Price;
-
+            //process the session key
             string cartkey = cart.ProductID + "/" + cart.StoreID;
             HttpContext.Session.Set<CartViewModel>(cartkey, cart);
 
@@ -146,7 +146,7 @@ namespace Assignment2.Controllers
         }
 
 
-        public List<CartViewModel> getSessionItems()
+        private List<CartViewModel> getSessionItems()
         {
             decimal totalPrice = 0;
             List<CartViewModel> shoppingList = new List<CartViewModel>();
@@ -160,9 +160,6 @@ namespace Assignment2.Controllers
             ViewData["TotalPrice"] = totalPrice;
             return shoppingList;
         }
-
-
-
 
     }
 }
