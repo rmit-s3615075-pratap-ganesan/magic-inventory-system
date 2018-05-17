@@ -55,9 +55,12 @@ namespace Assignment2.Controllers
                 newOrderHistory.TotalPrice = cart.TotalPrice;
                 _context.Add(newOrderHistory);
 
-               // var storeContext = _context.StoreInventory.Where(x => x.ProductID == productID).Select(x => x).First();
-               // storeContext.StockLevel += stockRequestToUpdate.Quantity;
+                var storeInventory = _context.StoreInventory.Where(x => x.Product.Name == cart.ProductName)
+                                           .Where(x=> x.Store.Name == cart.StoreName).Select(x => x).First();
+                storeInventory.StockLevel -= cart.Quantity;
+
                 await _context.SaveChangesAsync();
+                HttpContext.Session.Remove(storeInventory.ProductID + "/" + storeInventory.StoreID);
             }
 
             return RedirectToAction(nameof(Index));
