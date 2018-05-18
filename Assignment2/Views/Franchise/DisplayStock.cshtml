@@ -7,6 +7,16 @@
 }
 
  <h2>Store Inventory  - @Html.Raw(ViewBag.myData)    </h2>
+ <form asp-controller="Franchise" asp-action="CreateNewStock">
+    <p>
+        
+        Search by product name:   </p>
+  
+            <input type="text" name="SearchString" value="@ViewData["SearchString"]">
+                <input type="submit" value="Search"  />
+
+  
+</form>
 <table id="table">
     <thead>
         <tr>

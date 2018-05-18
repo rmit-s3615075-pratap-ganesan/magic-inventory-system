@@ -26,7 +26,7 @@ namespace Assignment2.Controllers
         }
 
         // GET: Franchise
-        public async Task<IActionResult> CreateNewStock()
+        public async Task<IActionResult> CreateNewStock(string searchString)
         {
             var user = await _userManager.GetUserAsync(User);
             ViewBag.myData = _context.Stores.Where(x => x.StoreID == user.StoreID).Select(x => x.Name).First();
@@ -34,11 +34,20 @@ namespace Assignment2.Controllers
                         .Include(x => x.Product)
                         .Select(x => x)
                         .Where(x => x.StoreID == user.StoreID);
+            
+            if ( searchString != null )
+            {
+                 query = _context.StoreInventory
+                   .Include(x => x.Product)
+                   .Select(x => x)
+                                 .Where(x => x.StoreID == user.StoreID).Where(x=> x.Product.Name.Contains(searchString));
+            }
+            ViewBag.SearchString = searchString;
            
             return View(await query.ToListAsync());
         }
         // GET: Franchise
-        public async Task<IActionResult> DisplayStock()
+        public async Task<IActionResult> DisplayStock(string searchString)
         {
             var user = await _userManager.GetUserAsync(User);
             ViewBag.myData = _context.Stores.Where(x => x.StoreID == user.StoreID).Select(x => x.Name).First();
@@ -46,7 +55,16 @@ namespace Assignment2.Controllers
                         .Include(x => x.Product)
                         .Select(x => x)
                         .Where(x => x.StoreID == user.StoreID);
-           
+
+            if (searchString != null)
+            {
+                searchString.Trim();
+                query = _context.StoreInventory
+                                .Include(x => x.Product)
+                                .Select(x => x)
+                                .Where(x => x.StoreID == user.StoreID).Where(x => x.Product.Name.Contains(searchString));
+                ViewBag.SearchString = searchString;
+            }
             return View(await query.ToListAsync());
         }
 
