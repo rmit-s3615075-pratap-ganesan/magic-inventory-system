@@ -18,19 +18,16 @@ namespace Assignment2.Controllers
             _context = context;
         }
 
-        // Auto-parsed variables coming in from the request - there is a form on the page to send this data.
-        public IActionResult Index()
+        // GET: Owner Stock Req
+        public async Task<IActionResult> DisplayRequests()
         {
-            // Eager loading the Product table - join between OwnerInventory and the Product table.
-            var query = _context.StockRequest.Include(x => x.Product).Include(x => x.Store).Select(x => x).ToList();
-            //Notify Owner if there is no stock request.
-            if (query.Count == 0)
+            var applicationDbContext = _context.StockRequest.Include(x => x.Product).Select(x => x);
+           
+            if (applicationDbContext.Count() == 0 )
             {
-
-                ViewBag.content = "There are no request right now. Come back later";
-
+                ViewBag.myData = "There are no request right now. Come back later";
             }
-            return View(query);
+            return View(await applicationDbContext.ToListAsync());
         }
 
 
@@ -90,7 +87,7 @@ namespace Assignment2.Controllers
                 // Provide for exceptions.
             }
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(DisplayRequests));
 
         }
 

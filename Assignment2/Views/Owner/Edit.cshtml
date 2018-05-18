@@ -4,28 +4,19 @@
     ViewData["Title"] = "Edit";
 }
 
-<h2>Reset Product</h2>
-
-
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.ProductID)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ProductID)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Product.Name)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Product.Name)
-        </dd>
-    </dl>
-
+<h2>Owner Inventory </h2>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+<div class="info">
+      <h2> Details </h2>
+    <hr />
+     <div class="col-md-12">
+          <div class="col-md-6">@Html.DisplayNameFor(model => model.ProductID) : @Html.DisplayFor(model => model.Product.ProductID)  </div>
+          <div class="col-md-6">@Html.DisplayNameFor(model => model.Product.Name) :  @Html.DisplayFor(model => model.Product.Name)</div>
+      </div>
+
+
+    <br/>  <br/> 
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
            <input type="hidden" asp-for="ProductID" />
@@ -35,15 +26,13 @@
                 <span asp-validation-for="StockLevel" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input class="saveButton" type="submit" value="Save" />
+                 <a class="backButton" asp-action="Index">Back </a>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
