@@ -21,7 +21,7 @@
            <th>
                 @Html.DisplayNameFor(model => model.StockLevel)
             </th>
-           
+           <th> Reset </th>
         </tr>
     </thead>
     <tbody>
@@ -37,7 +37,7 @@
                 @Html.DisplayFor(modelItem => item.StockLevel)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ProductID">Reset</a>
+                <a class="saveButton" asp-action="Edit" asp-route-id="@item.ProductID">Reset</a>
             </td>
         </tr>
         
@@ -46,5 +46,5 @@
     </tbody>
 </table>
 
- <center> <a  id="button" asp-action="Dashboard"> Dashboard</a> </center>
+ <center> <a  class="backButton" id="button" asp-action="Dashboard"> Dashboard</a> </center>
        

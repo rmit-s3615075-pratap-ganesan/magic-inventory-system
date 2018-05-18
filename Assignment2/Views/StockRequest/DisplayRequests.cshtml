@@ -25,7 +25,7 @@
                <th>
                 @Html.DisplayNameFor(model => model.StoreID)
             </th>
-           
+            <th> Process Stock Requests </th>           
         </tr>
     </thead>
     <tbody>
@@ -50,5 +50,5 @@
 }
     </tbody>
 </table>
-<h4> @Html.Raw(ViewBag.content) </h4>
- <center> <a  id="backButton" asp-action="Dashboard"> Dashboard</a> </center>
+ <h4> @Html.Raw(ViewBag.myData)    </h4>
+ <center> <a  class="backButton" asp-controller="Owner" asp-action="Dashboard"> Dashboard</a> </center>

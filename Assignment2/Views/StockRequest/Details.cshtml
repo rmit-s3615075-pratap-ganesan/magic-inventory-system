@@ -5,8 +5,16 @@
 }
 <h3> Process Stock Request </h3>
 <hr/>
+<div class="row">
+<div class="info">
  <dl class="dl-horizontal">
-      <dt>
+         <dt>
+            Product ID
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ProductID)
+        </dd>
+        <dt>
             Product Name
         </dt>
         <dd>
@@ -32,10 +40,7 @@
         </dd>    
       </dl>
 
-
-
-<div class="row">
-    <div class="col-md-4">
+     
         <form asp-action="Process">
             <div class="form-group">
                 <input type="hidden" asp-for="ProductID"/>
@@ -46,16 +51,16 @@
 
                     if (  stock  < quantity )
                     {
-                      <input type="submit" value="Process" class="btn btn-default" disabled="true" />
-                     <a  class="backButton" asp-controller="Owner" asp-action="Dashboard">Back</a>
+                      <input type="submit" value="Process" class="btn btn-default saveButton" disabled="true" style="margin-bottom: 10px;" />
+                       
                     }
                     else
                     {
-                       <input type="submit" value="Process" class="btn btn-default"  />
-                        <a  class="backButton" asp-controller="Owner" asp-action="Dashboard">Back</a>
+                       <input class="saveButton" type="submit" value="Process"   />
+                      
                     }
                  }
-               
+                 <a  class="backButton" asp-controller="StockRequest" asp-action="DisplayRequests">Back</a>
             </div>
         </form>
     </div>
