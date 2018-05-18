@@ -35,5 +35,8 @@
   <ItemGroup>
     <None Remove="Views\StockRequest\ViewData.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Controllers\TestController.cs" />
+  </ItemGroup>
 </Project>
 

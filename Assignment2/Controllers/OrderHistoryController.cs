@@ -29,7 +29,7 @@ namespace Assignment2.Controllers
 
         public async Task<IActionResult> Create(){
             CustomerOrder newOrder = new CustomerOrder();
-            newOrder.UserEmail = "pratap1288@gmail.com";
+            newOrder.UserEmail = "prapta1288@gmail.com";
             newOrder.TransactionDate = DateTime.Now;
             _context.Add(newOrder);
             await _context.SaveChangesAsync();
@@ -65,10 +65,8 @@ namespace Assignment2.Controllers
 
             }
 
-            //var controller = DependencyResolver.Current.GetService<CustomerController>();
-            //controller.ControllerContext = new ControllerContext(this.Request.RequestContext, controller)
             return RedirectToAction(nameof(CustomerOrderController.Index), "CustomerOrder",
-                                    new { id = 1, madeUpVariable= "abc" });
+                                    new { id = receiptID});
 
         }
     }
