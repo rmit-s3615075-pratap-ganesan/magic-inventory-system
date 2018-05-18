@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Assignment2.Models;
 using Assignment2.Models.CartViewModels;
 using Assignment2.Data;
+using Microsoft.AspNetCore.Identity;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -14,10 +15,12 @@ namespace Assignment2.Controllers
     public class OrderHistoryController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public OrderHistoryController(ApplicationDbContext context)
+        public OrderHistoryController(UserManager<ApplicationUser> userManager,ApplicationDbContext context)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: /<controller>/
@@ -29,7 +32,7 @@ namespace Assignment2.Controllers
 
         public async Task<IActionResult> Create(){
             CustomerOrder newOrder = new CustomerOrder();
-            newOrder.UserEmail = "prapta1288@gmail.com";
+            newOrder.UserEmail = _userManager.GetUserName(User);
             newOrder.TransactionDate = DateTime.Now;
             _context.Add(newOrder);
             await _context.SaveChangesAsync();

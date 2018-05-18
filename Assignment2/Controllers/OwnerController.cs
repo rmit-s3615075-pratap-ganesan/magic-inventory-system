@@ -78,7 +78,7 @@ namespace Assignment2.Controllers
         }
 
         // GET: Owner/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int? id)
         {
             if (id == null)
             {

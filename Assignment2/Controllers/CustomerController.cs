@@ -104,7 +104,7 @@ namespace Assignment2.Controllers
 
         [HttpPost, ActionName("Buy")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> BuyPost(StoreInventory storeInventory)
+        public IActionResult BuyPost(StoreInventory storeInventory)
         {
             if (storeInventory.StockLevel == 0)
             {
@@ -127,20 +127,20 @@ namespace Assignment2.Controllers
         }
 
 
-        public async Task<IActionResult> Cart()
+        public IActionResult Cart()
         {
             return View(getSessionItems());
         }
 
 
-        public async Task<IActionResult> DeleteCart(int prodID, int storeID)
+        public IActionResult DeleteCart(int prodID, int storeID)
         {
 
             HttpContext.Session.Remove(prodID + "/" + storeID);
             return RedirectToAction(nameof(Cart));
         }
 
-        public async Task<IActionResult> EditCart(int prodID, int storeID)
+        public IActionResult EditCart(int prodID, int storeID)
         {
             return RedirectToAction("Action", "controller", new { @storeid = storeID, @id = prodID });
         }
