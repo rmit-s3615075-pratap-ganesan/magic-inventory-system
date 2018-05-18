@@ -2,7 +2,6 @@
     padding-top: 50px;
     padding-bottom: 20px;
 }
-
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {
@@ -23,7 +22,7 @@
 
 .card .title {
     color: grey;
-    font-size: 18px
+    font-size: 18px;
 }
 
     .card button {
@@ -36,17 +35,17 @@
         text-align: center;
         cursor: pointer;
         width: 100%;
-        font-size: 18px
+        font-size: 18px;
     }
 
     .card a {
         text-decoration: none;
         font-size: 22px;
-        color: black
+        color: black;
     }
 
     .card button:hover, a:hover {
-        opacity: 0.7
+        opacity: 0.7;
     }
 
  
@@ -83,25 +82,25 @@
 
     .menu li:hover {
         -webkit-box-shadow: 0px 0px 7px rgba(255,255,255,0.9);
-        box-shadow: 0px 0px 7px rgba(255,255,255,0.9)
+        box-shadow: 0px 0px 7px rgba(255,255,255,0.9);
     }
     #table {
         font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
         border-collapse: collapse;
-        width: 100%
+        width: 100%;
     }
 
     #table td, #table th {
         border: 1px solid #ddd;
-        padding: 8px
+        padding: 8px;
     }
 
     #table tr:nth-child(even) {
-        background-color: #f2f2f2
+        background-color: #f2f2f2;
     }
 
     #table tr:hover {
-        background-color: #ddd
+        background-color: #ddd;
     }
 
     #table th {
@@ -109,24 +108,151 @@
         padding-bottom: 12px;
         text-align: left;
         background-color: #4CAF50;
-        color: white
+        color: white;
     }
 
-a {
-     display: inline-block;
-     padding: 0.3em 1.2em;
-     margin: 0 0.3em 0.3em 0;
-     border-radius: 2em;
-     box-sizing: border-box;
-     text-decoration: none;
-     font-family: 'Roboto',sans-serif;
-     font-weight: 300;
-     color: #FFFFFF;
-     background-color: #4eb5f1;
-     text-align: center;
-     transition: all 0.2s
+.info {
+    width: 450px;
+    height: auto;
+    border: 2px solid #000;
+    margin: 0 auto 15px;
+    text-align: center;
+    padding: 20px;
+    font-weight: bold;
+    border-radius: 10px;
+    background-color: #ddd;
+    border-color: #aaa
+}
+    .info h5, h6 {
+        text-align: left;
+        font-style: oblique;
+    }
+    .info h5 {
+        font-size: 20px;
+    }
+
+.backButton {
+    background-color: #4EB5F1;
+    padding: 10px;
+    display: inline-block;
+    border-radius: 10px;
+    margin-top: 10px;
+    text-decoration: none;
+    color: #FFFFFF;
 }
 
-    a:hover {
-         background-color: #4095c6
+.backButton:hover{
+     color:black;
+     text-decoration:none;
+   
+}
+.saveButton {
+    background-color: #71BC78;
+    padding: 10px;
+    display: inline-block;
+    border-radius: 10px;
+    margin-top: 10px;
+    text-decoration: none;
+    color: #FFFFFF;
+    border:none;
+}
+
+.saveButton:hover {
+    color: black;
+    text-decoration: none
+}
+
+
+#payment {
+    display: -ms-flexbox; /* IE10 */
+    display: flex;
+    -ms-flex-wrap: wrap; /* IE10 */
+    flex-wrap: wrap;
+    margin: 0 -16px;
+    padding: 50px
+}
+
+#payment form {
+background-color: #ececec;
+padding: 20px;
+width: 100%
+}
+
+.name {
+    width: 50%
+}
+
+#payment input[type=text] {
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 3px
+}
+
+#payment label {
+    margin-bottom: 10px;
+    display: block
+}
+
+#payment .icon-container {
+    margin-bottom: 20px;
+    padding: 7px 0;
+    font-size: 24px
+}
+
+#payment .btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px;
+    margin: 10px 0;
+    border: none;
+    width: 100%;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 17px
+}
+
+    #payment .btn:hover {
+        background-color: #45a049
     }
+
+#payment a {
+    color: #2196F3
+}
+
+#payment hr {
+    border: 1px solid lightgrey
+}
+
+#payment span.price {
+    float: right;
+    color: grey
+}
+
+/**
+ * The CSS shown here will not be introduced in the Quickstart guide, but shows
+ * how you can use CSS to style your Element's container.
+ */
+.StripeElement {
+    background-color: white;
+    height: 40px;
+    padding: 10px 12px;
+    border-radius: 4px;
+    border: 1px solid transparent;
+    box-shadow: 0 1px 3px 0 #e6ebf1;
+    -webkit-transition: box-shadow 150ms ease;
+    transition: box-shadow 150ms ease
+}
+
+.StripeElement--focus {
+    box-shadow: 0 1px 3px 0 #cfd7df
+}
+
+.StripeElement--invalid {
+    border-color: #fa755a
+}
+
+.StripeElement--webkit-autofill {
+    background-color: #fefde5 !important
+}

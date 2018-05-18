@@ -29,6 +29,7 @@ namespace Assignment2.Controllers
         public async Task<IActionResult> CreateNewStock()
         {
             var user = await _userManager.GetUserAsync(User);
+            ViewBag.myData = _context.Stores.Where(x => x.StoreID == user.StoreID).Select(x => x.Name).First();
             var query = _context.StoreInventory
                         .Include(x => x.Product)
                         .Select(x => x)
@@ -58,14 +59,22 @@ namespace Assignment2.Controllers
 
             var storeProduct = _context.StoreInventory.Where(x => x.StoreID == user.StoreID).Select(x => x.Product).ToList();
             var newItems = _context.OwnerInventory.Select(x => x.Product).ToList().Except(storeProduct).ToList();
-          
+            if ( newItems.Count() == 0 )
+            {
+                ViewBag.content = "There are no request right now. Come back later";
+            }
+
             return View(newItems);
         }
 
         // GET: Franchise/EditNewRequest/5
         public async Task<IActionResult> NewRequest(int? id)
         {
+
             var user = await _userManager.GetUserAsync(User);
+
+            ViewBag.myData = _context.Stores.Where(x => x.StoreID == user.StoreID).Select(x => x.Name).First();
+
             if (id == null)
             {
                 return NotFound();
@@ -85,7 +94,7 @@ namespace Assignment2.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> NewRequest([Bind("StoreID,ProductID,StockLevel")] StoreInventory storeInventory)
+        public async Task<IActionResult> NewRequest([Bind("StoreID,ProductID,StockLevel")] StoreInventory storeInventory , Product Product )
         {
             var user = await _userManager.GetUserAsync(User);
             var stockLevel = storeInventory.StockLevel;
@@ -101,8 +110,9 @@ namespace Assignment2.Controllers
             {
                 try
                 {
+                  
                     StockRequest stockReq = new StockRequest();
-                    stockReq.ProductID = Convert.ToInt32("" + Request.Form["Product.ProductID"]);
+                    stockReq.ProductID = Product.ProductID;
                     stockReq.Quantity = stockLevel;
                     stockReq.StoreID = storeID;
                     _context.StockRequest.Add(stockReq);

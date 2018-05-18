@@ -9,10 +9,11 @@ using Assignment2.Models.CartViewModels;
 using Assignment2.Utility;
 using Assignment2.Data;
 using Microsoft.AspNetCore.Http;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace Assignment2.Controllers
 {
+    [Authorize(Roles ="Customer")]
     public class CustomerController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -161,7 +162,10 @@ namespace Assignment2.Controllers
             return shoppingList;
         }
 
-
+        public IActionResult PaymentProcessing()
+        {
+            return View();
+        }
 
 
     }

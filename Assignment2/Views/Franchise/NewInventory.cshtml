@@ -4,8 +4,9 @@
     ViewData["Title"] = "Store Inventory";
 }
 
-<h2>Store Inventory</h2>
-<table class="table">
+<h2>Store Inventory - @Html.Raw(ViewBag.myData)</h2>
+
+<table id="table">
     <thead>
         <tr>
             <th>
@@ -14,10 +15,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
-                <td>
-     
-            </td>
-            <th></th>
+            <th> Stock Request </th>
         </tr>
     </thead>
     <tbody>
@@ -39,3 +37,5 @@
 }
     </tbody>
 </table>
+<h4> @Html.Raw(ViewBag.content) </h4>
+<center>   <a class="backButton"asp-action="Dashboard">Back</a> </center>

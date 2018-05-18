@@ -12,11 +12,11 @@ namespace Assignment2.Data
     {
         public static async Task Initialize(IServiceProvider serviceProvider)
         {
-           // DoSomething(serviceProvider);
+             DoSomething(serviceProvider);
 
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-            var roles = new[] { Constants.RetailRole, Constants.WholeSaleRole };
+            var roles = new[] { Constants.RetailRole, Constants.WholeSaleRole , Constants.CustomerRole};
             foreach (var role in roles)
             {
                 if (!await roleManager.RoleExistsAsync(role))
@@ -27,13 +27,13 @@ namespace Assignment2.Data
 
             var userManager = serviceProvider.GetService<UserManager<ApplicationUser>>();
 
-           // await EnsureUserHasRole(userManager, "s3635887@student.rmit.edu.au",Constants.WholeSaleRole);
-           // await EnsureUserHasRole(userManager, "nirajbohra@gmail.com",Constants.WholeSaleRole);
-           // await EnsureUserHasRole(userManager, "s3615075@student.rmit.edu.au",Constants.RetailRole);
-           // await EnsureUserHasStoreID(userManager, "s3615075@student.rmit.edu.au", rneCBD);
-           // await EnsureUserHasRole(userManager, "pratap1288@gmail.com",Constants.WholeSaleRole);
-         //  await EnsureUserHasStoreID(userManager, "s3615075@student.rmit.edu.au", Constants.MelbourneCBD);
-        }   
+            await EnsureUserHasRole(userManager, "pavan.wadhe@gmail.com", Constants.CustomerRole);
+            await EnsureUserHasRole(userManager, "s3635887@student.rmit.edu.au",Constants.WholeSaleRole);
+            await EnsureUserHasRole(userManager, "nirajbohra@gmail.com",Constants.WholeSaleRole);
+            await EnsureUserHasRole(userManager, "13030121038@sicsr.ac.in", Constants.RetailRole);
+            await EnsureUserHasStoreID(userManager, "s3578115@student.rmit.edu.au", Constants.MelbourneCBD);
+            await EnsureUserHasStoreID(userManager, "13030121038@sicsr.ac.in", 3);
+        }
 
         private static void DoSomething(IServiceProvider serviceProvider)
         {
@@ -50,43 +50,54 @@ namespace Assignment2.Data
                 {
                     new Product
                     {
-                        Name = "Rabbit"
+                        Name = "Rabbit",
+                        Price = 10.45M
                     },
                     new Product
                     {
-                        Name = "Hat"
+                        Name = "Hat",
+                        Price = 20.32M
                     },
                     new Product
                     {
-                        Name = "Svengali Deck"
+                        Name = "Svengali Deck",
+                        Price = 13.21M
+                            
                     },
                     new Product
                     {
-                        Name = "Floating Hankerchief"
+                        Name = "Floating Hankerchief",
+                        Price = 15.00M
                     },
                     new Product
                     {
-                        Name = "Wand"
+                        Name = "Wand",
+                        Price = 53.12M
                     },
                     new Product
                     {
-                        Name = "Broomstick"
+                        Name = "Broomstick",
+                        Price = 33.99M
                     },
                     new Product
                     {
-                        Name = "Bang Gun"
+                        Name = "Bang Gun",
+                        Price = 35.29M
                     },
                     new Product
                     {
-                        Name = "Cloak of Invisibility"
+                        Name = "Cloak of Invisibility",
+                        Price = 23.33M
                     },
                     new Product
                     {
-                        Name = "Elder Wand"
+                        Name = "Elder Wand",
+                        Price = 32.33M
                     },
                     new Product
                     {
-                        Name = "Resurrection Stone"
+                        Name = "Resurrection Stone",
+                        Price = 12.22M
                     }
                 };
 
@@ -257,7 +268,7 @@ namespace Assignment2.Data
         private static async Task EnsureUserHasRole(UserManager<ApplicationUser> userManager, string userName, string role)
         {
             var user = await userManager.FindByNameAsync(userName);
-            if(user != null && !await userManager.IsInRoleAsync(user, role))
+            if (user != null && !await userManager.IsInRoleAsync(user, role))
             {
                 await userManager.AddToRoleAsync(user, role);
             }
