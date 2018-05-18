@@ -85,12 +85,12 @@ namespace Assignment2.Controllers
                 return NotFound();
             }
 
-            var ownerInventory = await _context.OwnerInventory.SingleOrDefaultAsync(m => m.ProductID == id);
+            var ownerInventory = _context.OwnerInventory.Include(x => x.Product).Where(m => m.ProductID == id).First();
             if (ownerInventory == null)
             {
                 return NotFound();
             }
-            ViewData["ProductID"] = new SelectList(_context.Products, "ProductID", "ProductID", ownerInventory.ProductID);
+            //ViewData["ProductID"] = new SelectList(_context.Products, "ProductID", "ProductID", ownerInventory.ProductID);
             return View(ownerInventory);
         }
 

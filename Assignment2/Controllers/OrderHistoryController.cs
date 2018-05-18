@@ -29,7 +29,7 @@ namespace Assignment2.Controllers
 
         public async Task<IActionResult> Create(){
             CustomerOrder newOrder = new CustomerOrder();
-            newOrder.UserEmail = "pratap1288@gmail.com";
+            newOrder.UserEmail = "prapta1288@gmail.com";
             newOrder.TransactionDate = DateTime.Now;
             _context.Add(newOrder);
             await _context.SaveChangesAsync();
@@ -54,10 +54,19 @@ namespace Assignment2.Controllers
                 newOrderHistory.Quantity = cart.Quantity;
                 newOrderHistory.TotalPrice = cart.TotalPrice;
                 _context.Add(newOrderHistory);
+
+                var storeInventory = _context.StoreInventory.Where(x => x.Product.Name == cart.ProductName)
+                                           .Where(x=> x.Store.Name == cart.StoreName).Select(x => x).First();
+                storeInventory.StockLevel -= cart.Quantity;
+
                 await _context.SaveChangesAsync();
+                //Delete the session
+                HttpContext.Session.Remove(storeInventory.ProductID + "/" + storeInventory.StoreID);
+
             }
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(CustomerOrderController.Index), "CustomerOrder",
+                                    new { id = receiptID});
 
         }
     }

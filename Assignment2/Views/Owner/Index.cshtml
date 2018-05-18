@@ -36,6 +36,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.StockLevel)
             </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ProductID">Reset</a>
+            </td>
         </tr>
         
 }
