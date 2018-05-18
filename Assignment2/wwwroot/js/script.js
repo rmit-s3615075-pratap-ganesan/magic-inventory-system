@@ -53,14 +53,15 @@ form.addEventListener('submit', function(event) {
   stripe.createToken(card).then(function(result) {
     if (result.error) {
       // Inform the user if there was an error.
-      var errorElement = document.getElementById('card-errors');
+   
       errorElement.textContent = result.error.message;
         $("#danger-alert").alert();
       $("#danger-alert").fadeTo(2000, 500).slideUp(500, function(){
      $("#danger-alert").slideUp(500);
      });
-    } else {
-
+    } 
+    else {
+      return window.location.href ="http://localhost:5000/OrderHistory/Create";
       // Send the token to your server.
       stripeTokenHandler(result.token);
     }

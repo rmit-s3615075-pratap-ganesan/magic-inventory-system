@@ -9,20 +9,20 @@
     <div class="form-actions no-color">
         <p>
             Find by Product Name: <input type="text" name="SearchString" value="@ViewData["currentFilter"]" />
-            <input type="submit" value="Search" class="btn btn-default" /> |
-            <a asp-action="Index">Back to Full List</a>
+            <input type="submit" value="Search" class="saveButton" /> 
+            <a class="backButton" asp-action="Index">Refresh table</a>
         </p>
     </div>
 </form>
 
-<table class="table">
+<table id="table">
     <thead>
         <tr>
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Product Name</a>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" style="color:black;text-decoration:none;cursor:pointer;">Product Name</a>
             </th>
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["StoreSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Store Name</a>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["StoreSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" style="color:black;text-decoration:none;cursor:pointer;">Store Name</a>
             </th>
             <th>
                 Available
@@ -56,6 +56,7 @@
         }
     </tbody>
 </table>
+<br><br>
 @{
     var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
     var nextDisabled = !Model.HasNextPage ? "disabled" : "";
@@ -65,14 +66,14 @@
    asp-route-sortOrder="@ViewData["CurrentSort"]"
    asp-route-page="@(Model.PageIndex - 1)"
    asp-route-currentFilter="@ViewData["CurrentFilter"]"
-   class="btn btn-default @prevDisabled">
+   class="btn btn-default backButton @prevDisabled">
     Previous
 </a>
 <a asp-action="Index"
    asp-route-sortOrder="@ViewData["CurrentSort"]"
    asp-route-page="@(Model.PageIndex + 1)"
    asp-route-currentFilter="@ViewData["CurrentFilter"]"
-   class="btn btn-default @nextDisabled">
+   class="btn btn-default saveButton @nextDisabled">
    Next
 </a>
 

@@ -15,15 +15,12 @@
             <div class="heading">
                 <h1>Confirm Purchase</h1>
             </div>
-         <div class="alert alert-success collapse" id="success-alert"  data-dismiss="alert">
-            <button type="button" class="close" data-dismiss="alert">x</button>
-            <strong> Success </strong>
-                 </div>   
+
           <div class="alert alert-danger collapse" id="danger-alert"  data-dismiss="alert">
             <button type="button" class="close" data-dismiss="alert">x</button>
             <strong id="card-errors"> </strong>
         </div>
-        <form action="/" method="post" id="payment-form">
+        <form action="/OrderHistory/Create"  id="payment-form" >
           <div class="form-row">
             <label for="card-element">
               Credit or debit card
@@ -31,7 +28,7 @@
             <div id="card-element"></div>
            
            </div>
-          <button class="saveButton" id="submit">Submit Payment</button>
+          <button class="saveButton"   id="submit">Submit Payment</button>
         </form>
     </div>
 </div>
