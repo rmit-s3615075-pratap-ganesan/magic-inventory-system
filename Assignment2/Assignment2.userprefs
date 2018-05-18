@@ -1,16 +1,21 @@
 ﻿<Properties StartupConfiguration="{35159736-7193-4783-84E0-DEAE6550EE14}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Controllers/StockRequestController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Views/StockRequest/Details.cshtml">
     <Files>
       <File FileName="Controllers/FranchiseController.cs" Line="130" Column="62" />
       <File FileName="Views/Franchise/Dashboard.cshtml" Line="20" Column="119" />
       <File FileName="Controllers/OwnerController.cs" Line="71" Column="39" />
       <File FileName="Views/Franchise/NewRequest.cshtml" Line="31" Column="70" />
-      <File FileName="Controllers/StockRequestController.cs" Line="28" Column="31" />
+      <File FileName="Controllers/StockRequestController.cs" Line="73" Column="34" />
+      <File FileName="Views/StockRequest/Details.cshtml" Line="15" Column="54" />
     </Files>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/Users/MacBook_Main/Documents/RMIT/Web Development Technologies/Programs/magic-inventory-system/Assignment2/Controllers/StockRequestController.cs" relfile="Controllers/StockRequestController.cs" line="96" column="1" />
+      <Breakpoint file="/Users/MacBook_Main/Documents/RMIT/Web Development Technologies/Programs/magic-inventory-system/Assignment2/Controllers/StockRequestController.cs" relfile="Controllers/StockRequestController.cs" line="75" column="1" />
+      <Breakpoint file="/Users/MacBook_Main/Documents/RMIT/Web Development Technologies/Programs/magic-inventory-system/Assignment2/Controllers/StockRequestController.cs" relfile="Controllers/StockRequestController.cs" line="72" column="1" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches>
     <Watch file="Views/Franchise/Edit.cshtml" line="17" offsetX="322" offsetY="240" expression="            " liveUpdate="False" />
