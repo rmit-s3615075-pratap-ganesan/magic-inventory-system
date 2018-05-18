@@ -50,6 +50,13 @@ namespace Assignment2.Controllers
                 }
             }
 
+            //Show the total price of selected receipt
+            decimal totalPrice = 0;
+            foreach(OrderHistory orderHistory in viewModel.orderHistories){
+                totalPrice += orderHistory.TotalPrice;
+            }
+            ViewData["TotalPrice"] = totalPrice;
+
             return View(viewModel);
         }
     }
