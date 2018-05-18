@@ -112,11 +112,7 @@ namespace Assignment2.Migrations
 
                     b.Property<int>("StockLevel");
 
-                    b.Property<int?>("StoreID");
-
                     b.HasKey("ProductID");
-
-                    b.HasIndex("StoreID");
 
                     b.ToTable("OwnerInventory");
                 });
@@ -300,7 +296,7 @@ namespace Assignment2.Migrations
             modelBuilder.Entity("Assignment2.Models.OrderHistory", b =>
                 {
                     b.HasOne("Assignment2.Models.CustomerOrder", "CustomerOrder")
-                        .WithMany("OrderHistory")
+                        .WithMany("OrderHistories")
                         .HasForeignKey("ReceiptID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -311,10 +307,6 @@ namespace Assignment2.Migrations
                         .WithMany()
                         .HasForeignKey("ProductID")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Assignment2.Models.Store")
-                        .WithMany("OwnerInventory")
-                        .HasForeignKey("StoreID");
                 });
 
             modelBuilder.Entity("Assignment2.Models.StockRequest", b =>

@@ -11,14 +11,14 @@ using System;
 namespace Assignment2.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180513131556_initUpdate")]
-    partial class initUpdate
+    [Migration("20180518112029_newUpdate")]
+    partial class newUpdate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.0.3-rtm-10026")
+                .HasAnnotation("ProductVersion", "2.0.1-rtm-125")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Assignment2.Models.ApplicationUser", b =>
@@ -297,7 +297,7 @@ namespace Assignment2.Migrations
             modelBuilder.Entity("Assignment2.Models.OrderHistory", b =>
                 {
                     b.HasOne("Assignment2.Models.CustomerOrder", "CustomerOrder")
-                        .WithMany("OrderHistory")
+                        .WithMany("OrderHistories")
                         .HasForeignKey("ReceiptID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
