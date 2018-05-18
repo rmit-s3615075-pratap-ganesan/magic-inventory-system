@@ -6,7 +6,7 @@
 
 <h2>Magic e-cart</h2>  
 
-<table class="table">
+<table id="table">
     <thead>
         <tr>
             <th>
@@ -46,18 +46,35 @@
                     $@Html.DisplayFor(modelItem => item.TotalPrice)
                 </td>
                 <td>
-                <a asp-action="Buy" asp-route-storeid="@item.StoreID" asp-route-id="@item.ProductID">Edit</a> |
-                <a asp-action="DeleteCart" asp-route-prodID="@item.ProductID" asp-route-storeID="@item.StoreID">Delete</a> 
+                <a class="saveButton" asp-action="Buy" asp-route-storeid="@item.StoreID" asp-route-id="@item.ProductID">Edit</a> 
+                <a class="backButton" asp-action="DeleteCart" asp-route-prodID="@item.ProductID" asp-route-storeID="@item.StoreID">Delete</a> 
                 </td>
             </tr>
         }
+
+        <tr>
+            @{
+                if (!Model.Any() )
+                {
+                <td> <h5> No products added to the cart. </h5> </td>
+                }
+                else
+                {
+                  <td> <h5>Total Price $@ViewData["TotalPrice"]</h5> <form asp-controller="Customer" asp-action="PaymentProcessing">
+                     <input type="submit" value="Buy" class="saveButton" />
+                    </form>  </td>
+
+                    
+                   
+                }
+
+            }
+        </tr>
+ 
     </tbody>
 </table>
+<br><br>
 
-<form asp-controller="OrderHistory" asp-action="create">
-    <h1>Total Price $@ViewData["TotalPrice"]</h1>
-    <input type="submit" value="Buy" class="btn btn-default" />
-</form>
 
 
 

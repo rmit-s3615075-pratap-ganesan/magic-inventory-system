@@ -2,10 +2,13 @@
 
 @{
     ViewData["Title"] = "Buy";
+
 }
 
-<h2>Buy</h2>
+<center> <h2>Buy</h2></center>
 <hr/>
+<div class="row">
+<div class="info">
  <dl class="dl-horizontal">
       <dt>
             Product Name
@@ -32,34 +35,44 @@
            $@Html.DisplayFor(model => model.Product.Price)
         </dd>
     </dl>
+ 
 
-
-
-<div class="row">
-    <div class="col-md-4">
         <form asp-action="Buy">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+          <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="ProductID"/>
             <input type="hidden" asp-for="Product.Name"/>
             <input type="hidden" asp-for="StoreID"/>
             <input type="hidden" asp-for="Store.Name"/>
             <input type="hidden" asp-for="Product.Price"/>
+           
             <div class="form-group">
                 <b>Quantity</b>
-                <input asp-for="StockLevel" class="form-control"/>
-                <span asp-validation-for="StockLevel" class="text-danger"></span>
+                <input asp-for="StockLevel" name="StockLevel" class="form-control"/>
+                <span asp-validation-for="StockLevel" class="text-danger" id="errorBlock"></span>
+                 
             </div>
+           
             <div class="form-group">
-                <input type="submit" value="Buy" class="btn btn-default" />
+                <input type="submit" value="Buy" onclick="submitButton()" class="saveButton" />
+                 <a class="backButton" asp-action="Index">Back </a>
             </div>
         </form>
+
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+
 </div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script> 
+    
+        function submitButton()
+        {
+            if ( )
+
+        }
+    </script> 
 }

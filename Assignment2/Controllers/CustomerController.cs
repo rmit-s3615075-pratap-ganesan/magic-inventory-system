@@ -10,6 +10,7 @@ using Assignment2.Utility;
 using Assignment2.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;
+using System.Diagnostics.Contracts;
 
 namespace Assignment2.Controllers
 {
@@ -76,12 +77,20 @@ namespace Assignment2.Controllers
         }
 
 
-        public async Task<IActionResult> Buy(int? storeid, int? id)
+        public async Task<IActionResult> Buy(int storeid, int id)
         {
-            if (id == null)
+            var errMsg = TempData["ErrorMessage"] as string;
+            if ( TempData["ErrorMessage"] != null )
             {
-                return NotFound();
+                ViewData["error"] = TempData["ErrorMessage"];
+
             }
+            else
+            {
+                ViewData["error"] = "";
+                ViewData["error"] = TempData["clean"];
+            }
+
 
             var query = await _context.StoreInventory
                                 .Include(x => x.Product)
@@ -100,26 +109,39 @@ namespace Assignment2.Controllers
 
         [HttpPost, ActionName("Buy")]
         [ValidateAntiForgeryToken]
-        public IActionResult BuyPost(StoreInventory storeInventory)
+        public IActionResult BuyPost(StoreInventory storeInventory , int quantity)
         {
-            if (storeInventory.StockLevel == 0)
+
+            int availableQuantity = _context.StoreInventory.Where(x => x.ProductID == storeInventory.ProductID)
+                                            .Where(x => x.StoreID == storeInventory.StoreID)
+                                            .Select(x => x.StockLevel).First();
+           
+            if (availableQuantity < storeInventory.StockLevel)
             {
-                return NotFound();
+                // Throw error
+                TempData["ErrorMessage"] = "Error : Cannot process for the given input.";
+               return RedirectToAction("Buy", new { storeid = storeInventory.StoreID, id = storeInventory.ProductID });
+            }
+            else
+            {
+                TempData["clean"] = "";
+               
+                CartViewModel cart = new CartViewModel();
+                cart.ProductID = storeInventory.ProductID;
+                cart.ProductName = storeInventory.Product.Name;
+                cart.StoreID = storeInventory.StoreID;
+                cart.StoreName = storeInventory.Store.Name;
+                cart.Price = storeInventory.Product.Price;
+                cart.Quantity = storeInventory.StockLevel;
+                cart.TotalPrice = cart.Quantity * cart.Price;
+                //process the key and store in session 
+                string cartkey = cart.ProductID + "/" + cart.StoreID;
+                HttpContext.Session.Set<CartViewModel>(cartkey, cart);
+                return RedirectToAction(nameof(Index));
+
             }
 
-            CartViewModel cart = new CartViewModel();
-            cart.ProductID = storeInventory.ProductID;
-            cart.ProductName = storeInventory.Product.Name;
-            cart.StoreID = storeInventory.StoreID;
-            cart.StoreName = storeInventory.Store.Name;
-            cart.Price = storeInventory.Product.Price;
-            cart.Quantity = storeInventory.StockLevel;
-            cart.TotalPrice = cart.Quantity * cart.Price;
-            //process the key and store in session 
-            string cartkey = cart.ProductID + "/" + cart.StoreID;
-            HttpContext.Session.Set<CartViewModel>(cartkey, cart);
 
-            return RedirectToAction(nameof(Index));
         }
 
 
