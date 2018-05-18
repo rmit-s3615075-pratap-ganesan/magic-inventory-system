@@ -4,8 +4,8 @@
     ViewData["Title"] = "Store Inventory";
 }
 
-<h2>Store Inventory</h2>
-<table class="table">
+<h2>Store Inventory - @Html.Raw(ViewBag.myData)  </h2>
+<table id="table">
     <thead>
         <tr>
                 <th>
@@ -14,10 +14,8 @@
             <th>
                 @Html.DisplayNameFor(model => model.Product)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Store)
-            </th>
-            <th></th>
+     
+            <th> Stock Request </th>
         </tr>
     </thead>
     <tbody>
@@ -30,12 +28,11 @@
                 @Html.DisplayFor(modelItem => item.Product.ProductID)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Store.StoreID)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new {  id=item.ProductID  }) 
+                 <center> <a  asp-action="Edit" asp-route-id="@item.ProductID">  Request Stock</a> </center>
+         
             </td>
         </tr>
 }
     </tbody>
 </table>
+<center> <a class="backButton" asp-action="Dashboard" > Back </a> </center>

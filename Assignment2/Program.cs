@@ -25,7 +25,7 @@ namespace Assignment2
                 var services = scope.ServiceProvider;
                 try
                 {
-                 // SeedData.Initialize(services).Wait();
+                //  SeedData.Initialize(services).Wait();
                 }
                 catch (Exception ex)
                 {

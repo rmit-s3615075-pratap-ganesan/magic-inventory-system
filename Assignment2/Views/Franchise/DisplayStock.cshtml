@@ -7,16 +7,18 @@
 }
 
  <h2>Store Inventory  - @Html.Raw(ViewBag.myData)    </h2>
-<table class="table">
+<table id="table">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Product)
             </th>
              <th>
+                @Html.DisplayNameFor(model => model.Product.Name)
+            </th>
+             <th>
                 @Html.DisplayNameFor(model => model.StockLevel)
             </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -26,9 +28,13 @@
                 @Html.DisplayFor(modelItem => item.Product.ProductID)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.Product.Name)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.StockLevel)
             </td>
         </tr>
 }
     </tbody>
 </table>
+<center> <a class="backButton" asp-action="Dashboard">Back</a> </center>
