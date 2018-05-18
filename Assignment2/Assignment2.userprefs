@@ -1,13 +1,9 @@
 ﻿<Properties StartupConfiguration="{35159736-7193-4783-84E0-DEAE6550EE14}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Controllers/CustomerController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Views/Franchise/CreateNewStock.cshtml">
     <Files>
-      <File FileName="wwwroot/css/site.css" Line="115" Column="14" />
-      <File FileName="Views/Franchise/NewInventory.cshtml" Line="40" Column="38" />
-      <File FileName="Views/Home/Index.cshtml" Line="47" Column="4" />
-      <File FileName="Controllers/OwnerController.cs" Line="14" Column="4" />
-      <File FileName="Controllers/StockRequestController.cs" Line="1" Column="1" />
-      <File FileName="Controllers/CustomerController.cs" Line="16" Column="32" />
-      <File FileName="Controllers/FranchiseController.cs" Line="15" Column="5" />
+      <File FileName="Program.cs" Line="28" Column="18" />
+      <File FileName="Data/SeedData.cs" Line="33" Column="102" />
+      <File FileName="Views/Franchise/CreateNewStock.cshtml" Line="11" Column="11" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Assignment2.Migrations
 {
-    public partial class initUpdate : Migration
+    public partial class newUpdate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
