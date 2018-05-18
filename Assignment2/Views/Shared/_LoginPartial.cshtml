@@ -9,11 +9,12 @@
 {
     <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" id="logoutForm" class="navbar-right">
         <ul class="nav navbar-nav navbar-right">
-            if ( this.User.IsInRole("Customer") )
+         @if(this.User.IsInRole("Customer")){
                 <li>
-                    <a asp-area="" asp-controller="Cusotmer" asp-action="Cart" title="Cart">cart</a>
+                    <a asp-area="" asp-controller="Customer" asp-action="Cart" title="Cart">cart</a>
                 </li>
-             }
+          }      
+             
             <li>
                 <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
             </li>
