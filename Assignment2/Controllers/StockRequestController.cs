@@ -23,7 +23,13 @@ namespace Assignment2.Controllers
         {
             // Eager loading the Product table - join between OwnerInventory and the Product table.
             var query = _context.StockRequest.Include(x => x.Product).Include(x => x.Store).Select(x => x).ToList();
+            //Notify Owner if there is no stock request.
+            if (query.Count == 0)
+            {
 
+                ViewBag.content = "There are no request right now. Come back later";
+
+            }
             return View(query);
         }
 
