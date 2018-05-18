@@ -17,12 +17,11 @@ namespace Assignment2.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _sign;
-        public FranchiseController(UserManager<ApplicationUser> userManager, ApplicationDbContext context , SignInManager<ApplicationUser> sign)
+      
+        public FranchiseController(UserManager<ApplicationUser> userManager, ApplicationDbContext context )
         {
             _context = context;
             _userManager = userManager;
-            _sign = sign; 
         }
 
         // GET: Franchise
@@ -46,28 +45,7 @@ namespace Assignment2.Controllers
            
             return View(await query.ToListAsync());
         }
-        // GET: Franchise
-        public async Task<IActionResult> DisplayStock(string searchString)
-        {
-            var user = await _userManager.GetUserAsync(User);
-            ViewBag.myData = _context.Stores.Where(x => x.StoreID == user.StoreID).Select(x => x.Name).First();
-            var query = _context.StoreInventory
-                        .Include(x => x.Product)
-                        .Select(x => x)
-                        .Where(x => x.StoreID == user.StoreID);
-
-            if (searchString != null)
-            {
-                searchString.Trim();
-                query = _context.StoreInventory
-                                .Include(x => x.Product)
-                                .Select(x => x)
-                                .Where(x => x.StoreID == user.StoreID).Where(x => x.Product.Name.Contains(searchString));
-                ViewBag.SearchString = searchString;
-            }
-            return View(await query.ToListAsync());
-        }
-
+      
         public async Task<IActionResult> NewInventory()
         {
 
@@ -149,7 +127,7 @@ namespace Assignment2.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(DisplayStock));
+                return RedirectToAction(nameof(CreateNewStock));
             }
             ViewData["ProductID"] = new SelectList(_context.Products, "ProductID", "ProductID", storeInventory.ProductID);
             ViewData["StoreID"] = new SelectList(_context.Stores, "StoreID", "StoreID", storeInventory.StoreID);
@@ -247,7 +225,7 @@ namespace Assignment2.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(DisplayStock));
+                return RedirectToAction(nameof(CreateNewStock));
             }
             ViewData["ProductID"] = new SelectList(_context.Products, "ProductID", "ProductID", storeInventory.ProductID);
             ViewData["StoreID"] = new SelectList(_context.Stores, "StoreID", "StoreID", storeInventory.StoreID);
@@ -282,7 +260,7 @@ namespace Assignment2.Controllers
             var storeInventory = await _context.StoreInventory.SingleOrDefaultAsync(m => m.StoreID == id);
             _context.StoreInventory.Remove(storeInventory);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(DisplayStock));
+            return RedirectToAction(nameof(CreateNewStock));
         }
 
         private bool StoreInventoryExists(int id)

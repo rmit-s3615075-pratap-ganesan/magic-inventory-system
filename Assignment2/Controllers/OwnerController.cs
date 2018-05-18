@@ -68,14 +68,7 @@ namespace Assignment2.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!OwnerInventoryExists(ownerInventory.ProductID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    return NotFound();
                 }
                 return RedirectToAction(nameof(Index));
             }

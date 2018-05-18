@@ -57,11 +57,11 @@ namespace Assignment2.Controllers
         }
 
 
-        public IActionResult Process()
+        public IActionResult Process(int StockRequestID,int ProductID)
         {
-            var stockRequestID = Convert.ToInt32("" + Request.Form["StockrequestID"]);
+            var stockRequestID = StockRequestID;
 
-            var productID = Convert.ToInt32("" + Request.Form["ProductID"]);
+            var productID = ProductID;
 
             if (stockRequestID == 0)
             {
@@ -69,10 +69,24 @@ namespace Assignment2.Controllers
             }
             var stockRequestToUpdate = _context.StockRequest.Where(x => x.StockRequestID == stockRequestID).First();
             var ownerContext = _context.OwnerInventory.Where(x => x.ProductID == productID).Select(x => x).First();
-            var storeContext = _context.StoreInventory.Where(x => x.ProductID == productID).Select(x => x).First();
+            var storeContext = _context.StoreInventory.Where(x => x.ProductID == productID)
+                                       .Where(x=>x.StoreID==stockRequestToUpdate.StoreID)
+                                       .Select(x => x).FirstOrDefault();
+            if (storeContext == null)
+            {
+                StoreInventory newItem = new StoreInventory();
+                newItem.StoreID = stockRequestToUpdate.StoreID;
+                newItem.ProductID = stockRequestToUpdate.ProductID;
+                newItem.StockLevel = stockRequestToUpdate.Quantity;
+                _context.StoreInventory.Add(newItem);
+            }
+            else
+            {
+                storeContext.StockLevel += stockRequestToUpdate.Quantity;
 
+            }
             ownerContext.StockLevel -= stockRequestToUpdate.Quantity;
-            storeContext.StockLevel += stockRequestToUpdate.Quantity;
+                
             // Delete stock request 
             _context.Remove(stockRequestToUpdate);
 
