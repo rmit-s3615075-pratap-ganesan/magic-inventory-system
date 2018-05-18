@@ -60,10 +60,15 @@ namespace Assignment2.Controllers
                 storeInventory.StockLevel -= cart.Quantity;
 
                 await _context.SaveChangesAsync();
+                //Delete the session
                 HttpContext.Session.Remove(storeInventory.ProductID + "/" + storeInventory.StoreID);
+
             }
 
-            return RedirectToAction(nameof(Index));
+            //var controller = DependencyResolver.Current.GetService<CustomerController>();
+            //controller.ControllerContext = new ControllerContext(this.Request.RequestContext, controller)
+            return RedirectToAction(nameof(CustomerOrderController.Index), "CustomerOrder",
+                                    new { id = 1, madeUpVariable= "abc" });
 
         }
     }
