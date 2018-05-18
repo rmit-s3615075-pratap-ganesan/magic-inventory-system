@@ -43,9 +43,12 @@
               <td>
                 @Html.DisplayFor(modelItem => item.StoreID)
             </td>
+                    <td>
+                <a class="saveButton" asp-controller="StockRequest" asp-action="Details" asp-route-id="@item.StockRequestID">Details</a>
+            </td>
         </tr>
 }
     </tbody>
 </table>
 <h4> @Html.Raw(ViewBag.content) </h4>
- <center> <a  id="button" asp-action="Dashboard"> Dashboard</a> </center>
+ <center> <a  id="backButton" asp-action="Dashboard"> Dashboard</a> </center>

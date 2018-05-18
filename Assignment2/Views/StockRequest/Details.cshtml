@@ -47,10 +47,12 @@
                     if (  stock  < quantity )
                     {
                       <input type="submit" value="Process" class="btn btn-default" disabled="true" />
+                     <a  class="backButton" asp-controller="Owner" asp-action="Dashboard">Back</a>
                     }
                     else
                     {
                        <input type="submit" value="Process" class="btn btn-default"  />
+                        <a  class="backButton" asp-controller="Owner" asp-action="Dashboard">Back</a>
                     }
                  }
                
@@ -58,11 +60,6 @@
         </form>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
