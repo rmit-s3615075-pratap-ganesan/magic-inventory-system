@@ -256,3 +256,14 @@ width: 100%
 .StripeElement--webkit-autofill {
     background-color: #fefde5 !important
 }
+
+.receipt {
+    position: relative;
+    float: top;
+    right: 80px;    
+}
+.receipt_head {
+    position: relative;
+    top: 50px;
+    right: 50px
+}
