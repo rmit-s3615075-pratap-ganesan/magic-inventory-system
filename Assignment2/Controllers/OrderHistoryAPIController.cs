@@ -21,14 +21,14 @@ namespace Assignment2.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<OrderHistory>> Get()
+        public IEnumerable<OrderHistory> Get()
         {
             return _context.OrderHistory.ToList<OrderHistory>();
         }
 
 
         [HttpGet("{id}")]
-        public async Task<IEnumerable<OrderHistory>> Get(int id){
+        public IEnumerable<OrderHistory> Get(int id){
 
             return _context.OrderHistory.Where(x => x.ReceiptID == id).ToList<OrderHistory>();
         }

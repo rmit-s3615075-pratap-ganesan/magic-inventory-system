@@ -22,7 +22,7 @@ namespace Assignment2.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<CustomerOrder>> Get()
+        public IEnumerable<CustomerOrder> Get()
         {
             return  _context.CustomerOrder.ToList<CustomerOrder>();
         }
