@@ -1,5 +1,13 @@
 ﻿<Properties StartupConfiguration="{35159736-7193-4783-84E0-DEAE6550EE14}|Default">
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Controllers/StockRequestController.cs">
+    <Files>
+      <File FileName="Controllers/FranchiseController.cs" Line="130" Column="62" />
+      <File FileName="Views/Franchise/Dashboard.cshtml" Line="20" Column="119" />
+      <File FileName="Controllers/OwnerController.cs" Line="71" Column="39" />
+      <File FileName="Views/Franchise/NewRequest.cshtml" Line="31" Column="70" />
+      <File FileName="Controllers/StockRequestController.cs" Line="28" Column="31" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
