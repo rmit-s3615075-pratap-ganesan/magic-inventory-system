@@ -25,7 +25,8 @@ namespace Assignment2.Controllers
 
         // GET: /<controller>/
         public async Task<IActionResult> Index(int? id)
-        {
+        {   
+            //get the authenicated customer
             var user = await _userManager.GetUserAsync(User);
 
 
@@ -34,6 +35,7 @@ namespace Assignment2.Controllers
             {
                 var result = await client.GetStringAsync("http://localhost:5000/api/orders");
                 viewModel.customerOrders = JsonConvert.DeserializeObject<List<CustomerOrder>>(result);
+                //select only the orders by authenticated customer
                 viewModel.customerOrders = viewModel.customerOrders.Select(x => x).Where(x => x.UserEmail == user.Email).Reverse();
 
             }

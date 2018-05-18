@@ -44,7 +44,6 @@ namespace Assignment2.Controllers
             foreach (var session in HttpContext.Session.Keys)
             {
                 CartViewModel cart = HttpContext.Session.Get<CartViewModel>(session);
-
                 shoppingList.Add(cart);
             }
 

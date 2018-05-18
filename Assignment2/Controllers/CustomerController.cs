@@ -13,17 +13,16 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Assignment2.Controllers
 {
-    [Authorize(Roles ="Customer")]
+    [Authorize(Roles = "Customer")]
     public class CustomerController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private const int PAGE_SIZE = 3;
 
         public CustomerController(ApplicationDbContext context)
         {
             _context = context;
         }
-
-
 
         public async Task<IActionResult> Index(
             string sortOrder, string currentFilter,
@@ -42,22 +41,18 @@ namespace Assignment2.Controllers
                 searchString = currentFilter;
             }
             ViewData["CurrentFilter"] = searchString;
-
-
-
+            //Query to join StoreInventory, Product, Store
             var query = _context.StoreInventory
                                 .Include(x => x.Product)
                                 .Include(x => x.Store)
                                 .Select(x => x);
-            //var storeID = _context.Store.Where(x=>x.Name.Contains("bourne")).Select(x=>x.StoreID);
-
-
+            
             if (!string.IsNullOrWhiteSpace(searchString))
             {
                 query = query.Where(x => x.Product.Name.Contains(searchString));
 
             }
-
+            //Ordering the result
             switch (sortOrder)
             {
                 case "name_desc":
@@ -74,10 +69,10 @@ namespace Assignment2.Controllers
                     break;
             }
 
-            int pageSize = 3;
+
 
             return View(await PaginatedList<StoreInventory>
-                        .CreateAsync(query.AsNoTracking(), page ?? 1, pageSize));
+                        .CreateAsync(query.AsNoTracking(), page ?? 1, PAGE_SIZE));
         }
 
 
@@ -120,7 +115,7 @@ namespace Assignment2.Controllers
             cart.Price = storeInventory.Product.Price;
             cart.Quantity = storeInventory.StockLevel;
             cart.TotalPrice = cart.Quantity * cart.Price;
-            //process the session key
+            //process the key and store in session 
             string cartkey = cart.ProductID + "/" + cart.StoreID;
             HttpContext.Session.Set<CartViewModel>(cartkey, cart);
 
@@ -169,6 +164,6 @@ namespace Assignment2.Controllers
         }
 
 
-   }
+    }
 }
 
