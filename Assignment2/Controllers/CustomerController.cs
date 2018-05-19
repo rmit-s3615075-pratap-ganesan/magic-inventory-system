@@ -79,19 +79,8 @@ namespace Assignment2.Controllers
 
         public async Task<IActionResult> Buy(int storeid, int id)
         {
-            var errMsg = TempData["ErrorMessage"] as string;
-            if ( TempData["ErrorMessage"] != null )
-            {
-                ViewData["error"] = TempData["ErrorMessage"];
-
-            }
-            else
-            {
-                ViewData["error"] = "";
-                ViewData["error"] = TempData["clean"];
-            }
-
-
+            
+            ViewBag.content = "";
             var query = await _context.StoreInventory
                                 .Include(x => x.Product)
                                 .Include(x => x.Store)
@@ -109,39 +98,32 @@ namespace Assignment2.Controllers
 
         [HttpPost, ActionName("Buy")]
         [ValidateAntiForgeryToken]
-        public IActionResult BuyPost(StoreInventory storeInventory , int quantity)
+        public IActionResult BuyPost(StoreInventory storeInventory)
         {
+            int availableQty = _context.StoreInventory.Where(x => x.ProductID == storeInventory.ProductID)
+                                       .Where(x => x.StoreID == storeInventory.StoreID).Select(x => x.StockLevel).First();
 
-            int availableQuantity = _context.StoreInventory.Where(x => x.ProductID == storeInventory.ProductID)
-                                            .Where(x => x.StoreID == storeInventory.StoreID)
-                                            .Select(x => x.StockLevel).First();
-           
-            if (availableQuantity < storeInventory.StockLevel)
+            if (storeInventory.StockLevel > availableQty)
             {
-                // Throw error
-                TempData["ErrorMessage"] = "Error : Cannot process for the given input.";
-               return RedirectToAction("Buy", new { storeid = storeInventory.StoreID, id = storeInventory.ProductID });
-            }
-            else
-            {
-                TempData["clean"] = "";
-               
-                CartViewModel cart = new CartViewModel();
-                cart.ProductID = storeInventory.ProductID;
-                cart.ProductName = storeInventory.Product.Name;
-                cart.StoreID = storeInventory.StoreID;
-                cart.StoreName = storeInventory.Store.Name;
-                cart.Price = storeInventory.Product.Price;
-                cart.Quantity = storeInventory.StockLevel;
-                cart.TotalPrice = cart.Quantity * cart.Price;
-                //process the key and store in session 
-                string cartkey = cart.ProductID + "/" + cart.StoreID;
-                HttpContext.Session.Set<CartViewModel>(cartkey, cart);
-                return RedirectToAction(nameof(Index));
-
+                ModelState.AddModelError("StockLevel","Requested Quantity cannot be greater than available stock");
+                storeInventory.StockLevel = availableQty;
+                return View(storeInventory);
             }
 
+            CartViewModel cart = new CartViewModel();
+            cart.ProductID = storeInventory.ProductID;
+            cart.ProductName = storeInventory.Product.Name;
+            cart.StoreID = storeInventory.StoreID;
+            cart.StoreName = storeInventory.Store.Name;
+            cart.Price = storeInventory.Product.Price;
+            cart.Quantity = storeInventory.StockLevel;
+            cart.TotalPrice = cart.Quantity * cart.Price;
+            //process the key and store in session 
+            string cartkey = cart.ProductID + "/" + cart.StoreID;
+            HttpContext.Session.Set<CartViewModel>(cartkey, cart);
 
+            return RedirectToAction(nameof(Index));
+          
         }
 
 
