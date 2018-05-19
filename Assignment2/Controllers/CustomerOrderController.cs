@@ -48,14 +48,17 @@ namespace Assignment2.Controllers
                     var historyResult = await client.GetStringAsync("http://localhost:5000/api/orderhistory/" + id);
                     viewModel.orderHistories = JsonConvert.DeserializeObject<List<OrderHistory>>(historyResult);
                 }
+
+                //Show the total price of selected receipt
+                decimal totalPrice = 0;
+                foreach (OrderHistory orderHistory in viewModel.orderHistories)
+                {
+                    totalPrice += orderHistory.TotalPrice;
+                }
+                ViewData["TotalPrice"] = totalPrice;
             }
 
-            //Show the total price of selected receipt
-            decimal totalPrice = 0;
-            foreach(OrderHistory orderHistory in viewModel.orderHistories){
-                totalPrice += orderHistory.TotalPrice;
-            }
-            ViewData["TotalPrice"] = totalPrice;
+
 
             return View(viewModel);
         }

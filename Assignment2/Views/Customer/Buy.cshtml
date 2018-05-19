@@ -47,13 +47,12 @@
            
             <div class="form-group">
                 <b>Quantity</b>
-                <input asp-for="StockLevel" name="StockLevel" class="form-control"/>
-                <span asp-validation-for="StockLevel" class="text-danger" id="errorBlock"></span>
-                 
+                <input asp-for="StockLevel" name="StockLevel" id="data" class="form-control"/>
+                <span asp-validation-for="StockLevel" class="text-danger" ></span>
             </div>
            
             <div class="form-group">
-                <input type="submit" value="Buy" onclick="submitButton()" class="saveButton" />
+                <input type="submit" value="Buy" class="saveButton" />
                  <a class="backButton" asp-action="Index">Back </a>
             </div>
         </form>
@@ -67,12 +66,5 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <script> 
-    
-        function submitButton()
-        {
-            if ( )
-
-        }
-    </script> 
+   
 }
