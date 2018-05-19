@@ -1,50 +1,47 @@
-﻿@model IEnumerable<Assignment2.Models.StoreInventory>
-
+﻿@model IEnumerable
+<Assignment2.Models.StoreInventory>
 @{
-    ViewData["Title"] = "Store Inventory";
+ViewData["Title"] = "Store Inventory";
 }
-
 <h2>Store Inventory - @Html.Raw(ViewBag.myData)  </h2>
 <form asp-controller="Franchise" asp-action="CreateNewStock">
-    <p>
-        Search: <input type="text" name="SearchString" value="@ViewData["SearchString"]">
-        <input type="submit" value="Filter" />
-    </p>
+   <p>
+      Search: <input type="text" name="SearchString" value="@ViewData["SearchString"]">
+      <input type="submit" value="Filter" />
+   </p>
 </form>
 <table id="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Product)
-            </th>
-              <th>
-                @Html.DisplayNameFor(model => model.Product.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StockLevel)
-            </th>
-        
-            <th> Stock Request </th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Product.ProductID)
-            </td>
-             <td>
-                @Html.DisplayFor(modelItem => item.Product.Name)
-            </td>
-             <td>
-                @Html.DisplayFor(modelItem => item.StockLevel)
-            </td>
-            <td>
-                 <center> <a  asp-action="Edit" asp-route-id="@item.ProductID">  Request Stock</a> </center>
-         
-            </td>
-        </tr>
-}
-    </tbody>
+   <thead>
+      <tr>
+         <th>
+            @Html.DisplayNameFor(model => model.Product)
+         </th>
+         <th>
+            @Html.DisplayNameFor(model => model.Product.Name)
+         </th>
+         <th>
+            @Html.DisplayNameFor(model => model.StockLevel)
+         </th>
+         <th> Stock Request </th>
+      </tr>
+   </thead>
+   <tbody>
+      @foreach (var item in Model) {
+      <tr>
+         <td>
+            @Html.DisplayFor(modelItem => item.Product.ProductID)
+         </td>
+         <td>
+            @Html.DisplayFor(modelItem => item.Product.Name)
+         </td>
+         <td>
+            @Html.DisplayFor(modelItem => item.StockLevel)
+         </td>
+         <td>
+            <center> <a  asp-action="Edit" asp-route-id="@item.ProductID">  Request Stock</a> </center>
+         </td>
+      </tr>
+      }
+   </tbody>
 </table>
 <center> <a class="backButton" asp-action="Dashboard" > Back </a> </center>

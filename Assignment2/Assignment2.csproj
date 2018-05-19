@@ -28,7 +28,6 @@
     <Folder Include="Models\CartViewModels\" />
     <Folder Include="Migrations\" />
     <Folder Include="Views\StockRequest\" />
-    <Folder Include="Views\OrderHistory\" />
     <Folder Include="Views\CustomerOrder\" />
     <Folder Include="Models\OrderHistoryModels\" />
   </ItemGroup>

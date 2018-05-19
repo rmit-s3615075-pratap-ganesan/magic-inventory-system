@@ -1,4 +1,9 @@
-﻿using System;
+﻿/**
+ * @author Pratab
+ * @version 1.0
+ */
+//imports
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
@@ -47,7 +52,7 @@ namespace Assignment2.Controllers
                                 .Include(x => x.Product)
                                 .Include(x => x.Store)
                                 .Select(x => x);
-            
+
             if (!string.IsNullOrWhiteSpace(searchString))
             {
                 query = query.Where(x => x.Product.Name.Contains(searchString));
@@ -79,8 +84,8 @@ namespace Assignment2.Controllers
 
         public async Task<IActionResult> Buy(int storeid, int id)
         {
-            
-            ViewBag.content = "";
+
+           
             var query = await _context.StoreInventory
                                 .Include(x => x.Product)
                                 .Include(x => x.Store)
@@ -105,11 +110,18 @@ namespace Assignment2.Controllers
 
             if (storeInventory.StockLevel > availableQty)
             {
-                ModelState.AddModelError("StockLevel","Requested Quantity cannot be greater than available stock");
+                ModelState.AddModelError("StockLevel", "Requested Quantity cannot be greater than available stock");
+                storeInventory.StockLevel = availableQty;
+                return View(storeInventory);
+            }
+            if (storeInventory.StockLevel == 0)
+            {
+                ModelState.AddModelError("StockLevel", "Requested Quantity Cannot be decimal");
                 storeInventory.StockLevel = availableQty;
                 return View(storeInventory);
             }
 
+            //Adding the product to cart
             CartViewModel cart = new CartViewModel();
             cart.ProductID = storeInventory.ProductID;
             cart.ProductName = storeInventory.Product.Name;
@@ -118,12 +130,13 @@ namespace Assignment2.Controllers
             cart.Price = storeInventory.Product.Price;
             cart.Quantity = storeInventory.StockLevel;
             cart.TotalPrice = cart.Quantity * cart.Price;
+
             //process the key and store in session 
             string cartkey = cart.ProductID + "/" + cart.StoreID;
             HttpContext.Session.Set<CartViewModel>(cartkey, cart);
 
             return RedirectToAction(nameof(Index));
-          
+
         }
 
 

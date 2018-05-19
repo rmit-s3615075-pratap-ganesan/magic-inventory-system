@@ -31,6 +31,7 @@ namespace Assignment2.Controllers
 
 
         public async Task<IActionResult> Create(){
+            //Save Customer order in  DB
             CustomerOrder newOrder = new CustomerOrder();
             newOrder.UserEmail = _userManager.GetUserName(User);
             newOrder.TransactionDate = DateTime.Now;
@@ -48,6 +49,7 @@ namespace Assignment2.Controllers
             }
 
             OrderHistory newOrderHistory = new OrderHistory();
+            //Save the list of Products in DB
             foreach(CartViewModel cart in shoppingList){
                 newOrderHistory = new OrderHistory();
                 newOrderHistory.ReceiptID = receiptID;
@@ -60,8 +62,8 @@ namespace Assignment2.Controllers
                 var storeInventory = _context.StoreInventory.Where(x => x.Product.Name == cart.ProductName)
                                            .Where(x=> x.Store.Name == cart.StoreName).Select(x => x).First();
                 storeInventory.StockLevel -= cart.Quantity;
-
                 await _context.SaveChangesAsync();
+
                 //Delete the session
                 HttpContext.Session.Remove(storeInventory.ProductID + "/" + storeInventory.StoreID);
 

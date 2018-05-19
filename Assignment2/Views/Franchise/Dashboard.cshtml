@@ -1,25 +1,17 @@
 ﻿@inject UserManager<ApplicationUser> UserManager
 @{
     ViewData["Title"] = "Franchise Page";
-
-
-
 }
-
-
 <div class="card">
-  <img src="~/images/avatar.png" alt="John" style="width:100%">
-  <h4>@UserManager.GetUserName(User)</h4>
-  <p class="title">Franchise holder</p>
+      <img src="~/images/avatar.png" alt="John" style="width:100%">
+      <h4>@UserManager.GetUserName(User)</h4>
+      <p class="title">Franchise holder</p>
 </div>
-
-
-    <div class="menu">
-        <h2> Franchise Menu</h2>
-        <ul>
-            <li><a asp-area="" asp-controller="Franchise" asp-action="CreateNewStock">View Franchise Products</a></li>
-            <li><a asp-area="" asp-controller="Franchise" asp-action="NewInventory">Add new inventory item</a></li>
-           
-        </ul>
-    </div>
+<div class="menu">
+    <h2> Franchise Menu</h2>
+    <ul>
+        <li><a asp-area="" asp-controller="Franchise" asp-action="CreateNewStock">View Franchise Products</a></li>
+        <li><a asp-area="" asp-controller="Franchise" asp-action="NewInventory">Add new inventory item</a></li>
+    </ul>
+</div>
 

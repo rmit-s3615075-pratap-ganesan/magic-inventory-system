@@ -31,6 +31,7 @@ namespace Assignment2.Controllers
 
 
             var viewModel = new HistoryGroupData();
+            //Fetch the list of customer order
             using (var client = new HttpClient())
             {
                 var result = await client.GetStringAsync("http://localhost:5000/api/orders");
@@ -43,6 +44,7 @@ namespace Assignment2.Controllers
             if (id != null)
             {
                 ViewData["ReceiptID"] = id.Value;
+                //Fetch the list of order histories
                 using (var client = new HttpClient())
                 {
                     var historyResult = await client.GetStringAsync("http://localhost:5000/api/orderhistory/" + id);

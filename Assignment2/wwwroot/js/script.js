@@ -61,7 +61,9 @@ form.addEventListener('submit', function(event) {
      });
     } 
     else {
+    $("#submit").attr("disabled","disabled");
       return window.location.href ="http://localhost:5000/OrderHistory/Create";
+
       // Send the token to your server.
       stripeTokenHandler(result.token);
     }
