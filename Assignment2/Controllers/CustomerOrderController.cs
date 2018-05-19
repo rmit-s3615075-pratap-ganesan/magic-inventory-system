@@ -7,7 +7,6 @@ using Newtonsoft.Json;
 using System.Net.Http;
 using Assignment2.Models;
 using Assignment2.Models.OrderHistoryModels;
-using Assignment2.Data;
 using Microsoft.AspNetCore.Identity;
 
 namespace Assignment2.Controllers
@@ -28,9 +27,8 @@ namespace Assignment2.Controllers
         {   
             //get the authenicated customer
             var user = await _userManager.GetUserAsync(User);
-
-
             var viewModel = new HistoryGroupData();
+
             //Fetch the list of customer order
             using (var client = new HttpClient())
             {
@@ -38,7 +36,6 @@ namespace Assignment2.Controllers
                 viewModel.customerOrders = JsonConvert.DeserializeObject<List<CustomerOrder>>(result);
                 //select only the orders by authenticated customer
                 viewModel.customerOrders = viewModel.customerOrders.Select(x => x).Where(x => x.UserEmail == user.Email).Reverse();
-
             }
 
             if (id != null)
@@ -59,8 +56,6 @@ namespace Assignment2.Controllers
                 }
                 ViewData["TotalPrice"] = totalPrice;
             }
-
-
 
             return View(viewModel);
         }

@@ -1,5 +1,18 @@
 ﻿<Properties StartupConfiguration="{35159736-7193-4783-84E0-DEAE6550EE14}|Default">
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Controllers/OwnerController.cs">
+    <Files>
+      <File FileName="Controllers/StockRequestController.cs" Line="107" Column="1" />
+      <File FileName="Controllers/CustomerController.cs" Line="18" Column="1" />
+      <File FileName="Controllers/CustomerOrderAPIController.cs" Line="4" Column="26" />
+      <File FileName="Controllers/CustomerOrderController.cs" Line="59" Column="13" />
+      <File FileName="Controllers/FranchiseController.cs" Line="11" Column="32" />
+      <File FileName="Controllers/HomeController.cs" Line="1" Column="1" />
+      <File FileName="Controllers/ManageController.cs" Line="1" Column="1" />
+      <File FileName="Controllers/OrderHistoryAPIController.cs" Line="1" Column="1" />
+      <File FileName="Controllers/OrderHistoryController.cs" Line="27" Column="35" />
+      <File FileName="Controllers/OwnerController.cs" Line="46" Column="12" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />

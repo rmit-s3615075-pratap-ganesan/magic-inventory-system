@@ -15,7 +15,7 @@ using Assignment2.Utility;
 using Assignment2.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;
-using System.Diagnostics.Contracts;
+
 
 namespace Assignment2.Controllers
 {
@@ -142,7 +142,7 @@ namespace Assignment2.Controllers
 
         public IActionResult Cart()
         {
-            return View(getSessionItems());
+            return View(GetSessionItems());
         }
 
 
@@ -159,7 +159,7 @@ namespace Assignment2.Controllers
         }
 
 
-        private List<CartViewModel> getSessionItems()
+        private List<CartViewModel> GetSessionItems()
         {
             decimal totalPrice = 0;
             List<CartViewModel> shoppingList = new List<CartViewModel>();

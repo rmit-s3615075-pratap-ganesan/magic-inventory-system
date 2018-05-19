@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -43,7 +41,7 @@ namespace Assignment2.Controllers
             {
                 return NotFound();
             }
-            //ViewData["ProductID"] = new SelectList(_context.Products, "ProductID", "ProductID", ownerInventory.ProductID);
+           
             return View(ownerInventory);
         }
 
